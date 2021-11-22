@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>记账系统V1.0</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="static/assets/img/favicon.png" rel="icon">
+  <link href="static/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i,900" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+    <style type="text/css">
+        .input--haruki {
+margin: 4em 1em 1em;
+}
+.input__field--haruki {
+padding: 0.4em 0.25em;
+width: 30%;
+background: transparent;
+color: #485F6E;
+font-size: 1.55em;
+text-align:center;
+margin-bottom:30px;
+}
+.input__label--haruki {
+position: absolute;
+width: 100%;
+text-align: left;
+pointer-events: none;
+}
+.input__label-content--haruki {
+transition: transform 0.3s;
+}
+.input__label--haruki::before,
+.input__label--haruki::after {
+content: '';
+position: absolute;
+left: 0;
+z-index: -1;
+width: 100%;
+height: 4px;
+background: #6a7989;
+transition: transform 0.3s;
+}
+.input__label--haruki::before {
+    top: 0;
+}
+.input__label--haruki::after {
+bottom: 0;
+}
+.input__field--haruki:focus + .input__label--haruki .input__label-content--haruki,
+.input--filled .input__label-content--haruki {
+transform: translate3d(0, -90%, 0);
+}
+.input__field--haruki:focus + .input__label--haruki::before,
+.input--filled .input__label--haruki::before {
+transform: translate3d(0, -0.5em, 0);
+}
+.input__field--haruki:focus + .input__label--haruki::after,
+.input--filled .input__label--haruki::after {
+transform: translate3d(0, 0.5em, 0);
+}
+.table
+{
+    text-align:center;
+}
+    </style>
+    <script type="text/javascript">
+        var addname,addprice,addcost;
+        addname = document.getElementById("input-1").value;
+        addprice = document.getElementById("input-2").value;
+        addcost = document.getElementById("input-3").value;
+
+
+    </script>
+
+
+</head>
+
+<body>
+
+
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container">
+
+      <div class="logo float-left">
+        <h1 class="text-light"><a href="index.jsp"><span>Hu</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="temp.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu float-right d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="index.jsp"> 首页 <i class="la la-angle-down"></i></a></li>
+          <li><a href="recordlist.jsp"> 统计 </a></li>
+          <li><a href="echarts.jsp"> 图表 </a></li>
+          <li><a href="Revise.jsp"> 数据修改 </a></li>
+          <li><a href="Add.html">添加货物</a></li>
+
+
+        </ul></nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+    <!-- ======= Our Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>添加货物</h2>
+          <p>应用Tomcat,Java,Servlet,MySQL实现</p>
+        </div>
+
+    <!-- ======= Counts Section ======= -->
+    <section class="counts section-bg">
+        <div class="container">
+            <table class="table table-striped">
+
+                <tr>
+                    <td>货物名称</td>
+                    <td>货物价格（/斤）</td>
+                    <td>货物成本（/斤）</td>
+
+                </tr>
+
+
+                <tr>
+
+
+                </tr>
+
+
+            </table>
+            <form name="inputform" method="post" action="/RecordSystem/AddGoods">
+                <span class="input input--haruki"> <input class="input__field input__field--haruki" type="text" id="input-1" name="input1" /> <label class="input__label input__label--haruki" for="input-1"> <span class="input__label-content input__label-content--haruki" style="width:50px;line-height:50px;"></span> </label></span>
+                <span class="input input--haruki"> <input class="input__field input__field--haruki" type="text" id="input-2" name="input2" /> <label class="input__label input__label--haruki" for="input-2"> <span class="input__label-content input__label-content--haruki" style="width:50px;line-height:50px;"></span> </label></span>
+                <span class="input input--haruki"> <input class="input__field input__field--haruki" type="text" id="input-3" name="input3" /> <label class="input__label input__label--haruki" for="input-3"> <span class="input__label-content input__label-content--haruki" style="width:50px;line-height:50px;"></span> </label></span>
+                <span style="width:100%"><input type="submit" value="添加" style="height:50px;width:300px;margin-left:376px;"></span>
+            </form>
+        </div>
+    </section><!-- End Counts Section -->
+    </div></section><!-- End Our Team Section -->
+
+  <main id="main">
+
+
+
+  <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+
+      <div class="container">
+        <div class="copyright" style="height:1000px">
+          &copy; Copyright <strong><span>Huzhida</span></strong>. All Rights Reserved
+        </div>
+
+      </div>
+    </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="static/assets/vendor/jquery/jquery.min.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="static/assets/vendor/php-email-form/validate.js"></script>
+  <script src="static/assets/vendor/jquery-sticky/jquery.sticky.js"></script>
+  <script src="static/assets/vendor/venobox/venobox.min.js"></script>
+  <script src="static/assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+  <script src="static/assets/vendor/counterup/counterup.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+
+  </main></body>
+
+</html>
