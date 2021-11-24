@@ -125,7 +125,7 @@
                     </div>
 
                     <div class="col-lg-3 col-md-6 text-center" data-aos="fade-up" data-aos-delay="600">
-                        <a href="/team">
+                        <a href="/RecordSystem/team">
                             <div class="count-box">
                                 <i class="icofont-users-alt-5" style="color: #ffb459;"></i>
                                 <span data-toggle="counter-up">1</span>
