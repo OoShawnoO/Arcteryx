@@ -49,7 +49,7 @@ public class SQLtool {
 
     public ArrayList<Goods> Select() throws SQLException {
         Statement statement;
-        ArrayList<Goods> goodsList = new ArrayList<Goods>();
+        ArrayList<Goods> goodsList = new ArrayList<>();
         if((statement=Connect())!=null){
             String sql = "Select id,name,price,cost from record";
             ResultSet resultSet = statement.executeQuery(sql);
@@ -67,11 +67,18 @@ public class SQLtool {
         return goodsList;
     }
 
-    public void Insert(String name,String uploader,float price,float cost) throws SQLException {
+    public void Insert(String tablename,String name,String user,float price,float cost) throws SQLException {
         Statement statement;
         if((statement = Connect())!=null){
-            String sql = String.format("INSERT INTO record(name,uploader,price,cost) VALUES('%s','%s',%f,%f)",name,uploader,price,cost);
-            //System.out.println(sql);
+            String sql=";";
+            if(tablename.equals("delete_history")){
+                sql = String.format("INSERT INTO %s(name,deleter,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
+            }
+            if(tablename.equals("record")){
+                sql = String.format("INSERT INTO %s(name,uploader,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
+            }
+
+            System.out.println(sql);
             statement.execute(sql);
         }
     }
@@ -84,11 +91,14 @@ public class SQLtool {
         }
     }
 
-    public void Update(int id,String name,float price,float cost) throws SQLException {
+    public void Update(int id,String new_name,float new_price,float new_cost,String old_name,String updater,float old_price,float old_cost) throws SQLException {
         Statement statement;
         if((statement = Connect())!=null){
-            String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",name,price,cost,id);
+            String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost) values('%s','%s','%f','%f','%s','%f','%f')",new_name,updater,new_price,new_cost,old_name,old_price,old_cost);
+            statement.execute(sql1);
+            String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",new_name,new_price,new_cost,id);
             statement.execute(sql);
+            statement.close();
         }
 
     }
