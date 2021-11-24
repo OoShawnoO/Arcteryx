@@ -21,7 +21,28 @@
         <filter-name>LogFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    
+
+    <filter>
+        <filter-name>UpdateFilter</filter-name>
+        <filter-class>swu.edu.hzd.UpdateFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>UpdateFilter</filter-name>
+        <url-pattern>/AddGoods</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>UpdateFilter</filter-name>
+        <url-pattern>/Update</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>UpdateFilter</filter-name>
+        <url-pattern>/Delete</url-pattern>
+    </filter-mapping>
+
+
 
     <servlet>
         <servlet-name>Login</servlet-name>
