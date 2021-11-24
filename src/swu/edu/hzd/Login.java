@@ -1,56 +1,40 @@
 package swu.edu.hzd;
 
-import javax.servlet.annotation.WebServlet;
+
+
+
+import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
+public class LogFilter implements Filter {
 
-
-@WebServlet(name="Login",value = "/Login")
-public class Login extends HttpServlet {
-    public static ArrayList<HttpSession> sessions = new ArrayList<HttpSession>();
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("i am doing things");
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        String site = filterConfig.getInitParameter("Site");
+        System.out.println("网站名称:"+site);
     }
 
-    protected  void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        SQLtool sqLtool = new SQLtool();
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        if(request.getServletPath().equals("/Login") || request.getServletPath().equals("/login.html")){
+            filterChain.doFilter(request,response);
+        }
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        Users user = new Users();
-        user.setName(username);
-        user.setPassword(password);
 
         HttpSession session = request.getSession();
-        System.out.println(username+" "+password);
-        int i=0;
-        try {
-            if(sqLtool.Select_Users(username,password)){
-                sessions.add(session);
-                if(!response.isCommitted()) {
-                    response.sendRedirect("index.jsp");
-                }
-
+        if(Login.sessions.contains(session)){
+            filterChain.doFilter(request,response);
+        }
+        else{
+            if(!response.isCommitted()) {
+                response.sendRedirect("login.html?true=-2");
             }
-            else{
-                int ok = -1;
-                response.setContentType("text/html");
-                PrintWriter out = response.getWriter();
-
-                response.sendRedirect(String.format("login.html?true=%d",ok));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
