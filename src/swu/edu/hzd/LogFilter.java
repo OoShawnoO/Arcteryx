@@ -32,7 +32,9 @@ public class LogFilter implements Filter {
             filterChain.doFilter(request,response);
         }
         else{
-            response.sendRedirect("login.html?true=-2");
+            if(!response.isCommitted()) {
+                response.sendRedirect("login.html?true=-2");
+            }
         }
     }
 
