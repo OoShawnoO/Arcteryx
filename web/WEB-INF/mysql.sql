@@ -29,5 +29,6 @@ CREATE TABLE `update_history`(
                                  `old_name` VARCHAR(100) NOT NULL,
                                  `old_price` FLOAT NOT NULL,
                                  `old_cost` FLOAT NOT NULL,
+                                 `datetime` DATE NOT NULL,
                                  PRIMARY KEY ( `id` )
 )

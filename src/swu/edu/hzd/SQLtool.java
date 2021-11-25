@@ -3,7 +3,9 @@ package swu.edu.hzd;
 import com.sun.source.tree.NewArrayTree;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SQLtool {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -94,7 +96,9 @@ public class SQLtool {
     public void Update(int id,String new_name,float new_price,float new_cost,String old_name,String updater,float old_price,float old_cost) throws SQLException {
         Statement statement;
         if((statement = Connect())!=null){
-            String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost) values('%s','%s','%f','%f','%s','%f','%f')",new_name,updater,new_price,new_cost,old_name,old_price,old_cost);
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost,datetime) values('%s','%s','%f','%f','%s','%f','%f','%s')",new_name,updater,new_price,new_cost,old_name,old_price,old_cost,format.format(date));
             statement.execute(sql1);
             String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",new_name,new_price,new_cost,id);
             statement.execute(sql);

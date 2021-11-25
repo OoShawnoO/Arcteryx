@@ -110,7 +110,7 @@
             for(Goods goods:arrayList){
 
           %>
-          <tr>
+          <tr onclick="">
             <td><%out.print(goods.getId());%></td>
             <td><%out.print(goods.getName());%></td>
             <td><%out.print(goods.getPrice());%></td>
