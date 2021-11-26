@@ -126,8 +126,8 @@
               <td><%out.print(goods.getId());%></td>
               <input type="hidden" name="id" value="<%out.print(goods.getId());%>">
               <td><input type="text" name="name" value="<%out.print(goods.getName());%>" style="text-align: center;border:0;background-color:#d9e8f4"></td>
-              <td><input type="text" name="price" value="<%out.print(goods.getPrice());%>" style="text-align:center;"></td>
-              <td><input type="text" name="cost" value="<%out.print(goods.getCost());%>" style="text-align:center;"></td>
+              <td><input type="number" step="0.01" name="price" value="<%out.print(goods.getPrice());%>" style="text-align:center;"></td>
+              <td><input type="number" step="0.01" name="cost" value="<%out.print(goods.getCost());%>" style="text-align:center;"></td>
               <td>
                 <input type="submit" value="提交">
               </td>

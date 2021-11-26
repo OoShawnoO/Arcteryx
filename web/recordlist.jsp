@@ -47,6 +47,13 @@
 
 
   </script>
+
+  <style type="text/css">
+    .table-striped tr:hover{
+      background-color:lightseagreen;
+    }
+
+  </style>
 </head>
 
 <body>
