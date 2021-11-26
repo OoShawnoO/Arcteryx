@@ -133,7 +133,7 @@
               </form>
             </td>
           </tr>
-          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;"><div id="echarts<%out.print(i);%>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
+          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb"><div id="echarts<%out.print(i);%>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
           <%
             }
           %>
