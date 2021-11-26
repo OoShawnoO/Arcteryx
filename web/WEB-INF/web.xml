@@ -94,4 +94,14 @@
         <url-pattern>/team</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Upload</servlet-name>
+        <servlet-class>swu.edu.hzd.Upload</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Upload</servlet-name>
+        <url-pattern>/Upload</url-pattern>
+    </servlet-mapping>
+
 </web-app>

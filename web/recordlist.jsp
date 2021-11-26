@@ -85,6 +85,28 @@
       <h2>货物统计表</h2>
       <p>应用Tomcat,Java,Servlet,MySQL实现</p>
     </div>
+
+    <script>
+      function getQueryVariable(variable)
+      {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+          var pair = vars[i].split("=");
+          if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+      }
+      if(getQueryVariable("success")=="1"){
+        alert("上传成功！")
+      }
+
+      if(getQueryVariable("success")=="-1"){
+        alert("上传失败！")
+      }
+
+    </script>
+
     <script type="text/javascript">
       function hid(id){
         if(document.getElementById(id).getAttribute("hidden")===null){
@@ -268,7 +290,15 @@
         %>
 
 
+        <form method="post" action="/RecordSystem/Upload" enctype="multipart/form-data">
+            <table style="margin:0 auto;">
+              <tr>
+                <td><input type="file" name="uploadfile"></td>
+                <td><input type="submit" value="上传文件"></td>
+              </tr>
+            </table>
 
+        </form>
 
 
 
