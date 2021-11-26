@@ -48,6 +48,28 @@ public class SQLtool {
         return false;
     }
 
+    public Goods Select_Update(String goodsname) throws SQLException {
+        Statement statement;
+        Goods goods = new Goods();
+        goods.setName(goodsname);
+        if((statement=Connect())!=null){
+            String sql= String.format("select * from update_history");
+            ResultSet rs = statement.executeQuery(sql);
+            while(rs.next()){
+                if(rs.getString("old_name").equals(goodsname)){
+                    goods.OldPrice.add(rs.getFloat("old_price"));
+                    goods.OldCost.add(rs.getFloat("old_cost"));
+                    goods.DateList.add(rs.getString("datetime"));
+                    goods.OldPrice.add(rs.getFloat("new_price"));
+                    goods.OldCost.add(rs.getFloat("new_cost"));
+                }
+            }
+            rs.close();
+            statement.close();
+        }
+        return goods;
+    }
+
 
     public ArrayList<Goods> Select() throws SQLException {
         Statement statement;

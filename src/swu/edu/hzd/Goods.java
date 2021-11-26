@@ -1,11 +1,30 @@
 package swu.edu.hzd;
 
+import java.util.ArrayList;
+
 public class Goods {
     private String name;
     private float price;
     private float cost;
     private int id;
     private float profit;
+    public ArrayList<Float>  OldPrice = new ArrayList<>();
+    public ArrayList<Float>  OldCost = new ArrayList<>();
+    public ArrayList<String> DateList = new ArrayList<>();
+
+    public void setProfit(float profit) {
+        this.profit = profit;
+    }
+
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    private String updatetime;
 
     public float getProfit() {
         return price-cost;
@@ -50,6 +69,8 @@ public class Goods {
     public void setUploader(String uploader) {
         this.uploader = uploader;
     }
+
+
 
     private String uploader;
 

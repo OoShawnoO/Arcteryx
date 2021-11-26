@@ -4,6 +4,7 @@
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.Statement" %>
+<%@ page import="java.util.ListIterator" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -84,7 +85,17 @@
       <h2>货物统计表</h2>
       <p>应用Tomcat,Java,Servlet,MySQL实现</p>
     </div>
+    <script type="text/javascript">
+      function hid(id){
+        if(document.getElementById(id).getAttribute("hidden")===null){
+          document.getElementById(id).setAttribute("hidden","hidden");
+        }
+        else{
+          document.getElementById(id).removeAttribute("hidden");
+        }
+      }
 
+    </script>
     <!-- ======= Counts Section ======= -->
     <section class="counts section-bg">
       <div class="container">
@@ -106,11 +117,11 @@
             } catch (SQLException e) {
               e.printStackTrace();
             }
-
+            int i=0;
             for(Goods goods:arrayList){
-
+              i++;
           %>
-          <tr onclick="">
+          <tr onclick="hid('hid<%out.print(i);%>')">
             <td><%out.print(goods.getId());%></td>
             <td><%out.print(goods.getName());%></td>
             <td><%out.print(goods.getPrice());%></td>
@@ -122,6 +133,7 @@
               </form>
             </td>
           </tr>
+          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;"><div id="echarts<%out.print(i);%>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
           <%
             }
           %>
@@ -132,8 +144,132 @@
       </div>
     </section><!-- End Counts Section -->
   </div></section><!-- End Our Team Section -->
+    <script src="static/assets/js/echarts.js"></script>
+    <!--<div id="echarts1" style="width:900px;height:500px;margin:0 auto;"></div>-->
 
-<main id="main">
+        <%
+          int j=0;
+          for(Goods goods:arrayList){
+            try {
+                  j++;
+                  Goods updategood = sqltool.Select_Update(goods.getName());
+                  if(updategood.DateList.isEmpty()||updategood.OldCost.isEmpty()||updategood.OldPrice.isEmpty()){continue;}
+
+        %>
+<script>
+        var myChart<%out.print(j);%> = echarts.init(document.getElementById('echarts<%out.print(j);%>'));
+        option = {
+            title: {
+                text: '货物价格成本趋势表'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {},
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: [<%
+                  int n=0;
+                  for(String date:updategood.DateList){
+                    if(n>0){out.print(",");}
+                    out.print("'"+date+"'");
+                    n++;
+                  }
+                %>]
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}元/kg'
+                }
+            },
+            series: [
+                {
+                    name: '价格',
+                    type: 'line',
+                    data: [<%
+                              int x=0;
+                              for(float price:updategood.OldPrice){
+                                if(x>0){out.print(",");}
+                                out.print(price);
+                                x++;
+                              }
+                            %>],
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: 'Max' },
+                            { type: 'min', name: 'Min' }
+                        ]
+                    },
+                    markLine: {
+                        data: [{ type: 'average', name: 'Avg' }]
+                    }
+                },
+                {
+                    name: '成本',
+                    type: 'line',
+                    data: [<%
+                            int m=0;
+                              for(float cost:updategood.OldCost){
+                                if(m>0){out.print(",");}
+                                out.print(cost);
+                                m++;
+                              }
+
+                            %>],
+                    markPoint: {
+                        data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }]
+                    },
+                    markLine: {
+                        data: [
+                            { type: 'average', name: 'Avg' },
+                            [
+                                {
+                                    symbol: 'none',
+                                    x: '90%',
+                                    yAxis: 'max'
+                                },
+                                {
+                                    symbol: 'circle',
+                                    label: {
+                                        position: 'start',
+                                        formatter: 'Max'
+                                    },
+                                    type: 'max',
+                                    name: '最高点'
+                                }
+                            ]
+                        ]
+                    }
+                }
+            ]
+        };
+        myChart<%out.print(j);%>.setOption(option);
+</script>
+        <%
+        } catch (SQLException e) {
+                   e.printStackTrace();
+            }
+
+          }
+        %>
+
+
+
+
 
 
 
@@ -166,6 +302,7 @@
   <!-- Template Main JS File -->
   <script src="static/assets/js/main.js"></script>
 
-</main></body>
+
+</body>
 
 </html>
