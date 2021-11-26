@@ -26,12 +26,13 @@ public class Login extends HttpServlet {
         String password = request.getParameter("password");
 
         HttpSession session = request.getSession();
-        System.out.println(username+" "+password);
+
 
         try {
             if(sqLtool.Select_Users(username,password)){
                 session.setAttribute("username",username);
                 sessions.add(session);
+                System.out.println("用户："+username+"   Session:"+session.getId()+"正在会话....");
                 if(!response.isCommitted()) {
                     response.sendRedirect("index.jsp");
                 }
