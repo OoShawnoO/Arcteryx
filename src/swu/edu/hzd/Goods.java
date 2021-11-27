@@ -1,6 +1,7 @@
 package swu.edu.hzd;
 
 import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class Goods {
     private String name;
@@ -8,7 +9,7 @@ public class Goods {
     private float cost;
     private int id;
     private float profit;
-    public ArrayList<Float>  OldPrice = new ArrayList<>();
+    public ArrayList<Float> OldPrice = new ArrayList<>();
     public ArrayList<Float>  OldCost = new ArrayList<>();
     public ArrayList<String> DateList = new ArrayList<>();
 

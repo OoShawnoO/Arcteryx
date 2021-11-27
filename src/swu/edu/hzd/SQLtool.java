@@ -60,8 +60,12 @@ public class SQLtool {
                     goods.OldPrice.add(rs.getFloat("old_price"));
                     goods.OldCost.add(rs.getFloat("old_cost"));
                     goods.DateList.add(rs.getString("datetime"));
-                    goods.OldPrice.add(rs.getFloat("new_price"));
+
+
+                }
+                if(rs.isLast()){
                     goods.OldCost.add(rs.getFloat("new_cost"));
+                    goods.OldPrice.add(rs.getFloat("new_price"));
                 }
             }
             rs.close();

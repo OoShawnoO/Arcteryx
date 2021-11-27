@@ -5,6 +5,8 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.util.ListIterator" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -178,10 +180,12 @@
 
         <%
           int j=0;
+          SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
           for(Goods goods:arrayList){
             try {
                   j++;
                   Goods updategood = sqltool.Select_Update(goods.getName());
+
                   if(updategood.DateList.isEmpty()||updategood.OldCost.isEmpty()||updategood.OldPrice.isEmpty()){continue;}
 
         %>
@@ -217,6 +221,7 @@
                     out.print("'"+date+"'");
                     n++;
                   }
+                  //out.print(",'"+simpleDateFormat.format(new Date())+"'");
                 %>]
             },
             yAxis: {
@@ -236,6 +241,7 @@
                                 out.print(price);
                                 x++;
                               }
+                              //out.print(","+goods.getPrice());
                             %>],
                     markPoint: {
                         data: [
@@ -257,7 +263,7 @@
                                 out.print(cost);
                                 m++;
                               }
-
+                              //out.print(","+goods.getCost());
                             %>],
                     markPoint: {
                         data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }]
