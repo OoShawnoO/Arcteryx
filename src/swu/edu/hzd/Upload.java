@@ -37,7 +37,7 @@ public class Upload extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setFileSizeMax(MAX_FILE_SIZE);
         upload.setHeaderEncoding("utf-8");
-        String uploadPath = request.getContextPath()+ File.separator +"WEB-INF"+File.separator + UPLOADDIRECOTRY;
+        String uploadPath = request.getServletContext().getRealPath("./")+File.separator + UPLOADDIRECOTRY;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
@@ -61,7 +61,7 @@ public class Upload extends HttpServlet {
             flag = -1;
         }
 
-        response.sendRedirect("recordlist.jsp?success="+flag);
+        response.sendRedirect("Add.html?success="+flag);
     }
 
     protected  void doGet(HttpServletRequest request,HttpServletResponse response){

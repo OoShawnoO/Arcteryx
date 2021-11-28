@@ -111,6 +111,15 @@ transform: translate3d(0, 0.5em, 0);
     if(getQueryVariable("wrong")=="-1"){
         alert("输入数据类型错误！")
     }
+
+    if(getQueryVariable("success")=="1"){
+        alert("上传成功！")
+    }
+
+    if(getQueryVariable("success")=="-1"){
+        alert("上传失败！")
+    }
+
 </script>
 
   <!-- ======= Header ======= -->
@@ -171,6 +180,17 @@ transform: translate3d(0, 0.5em, 0);
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="number" step="0.01" id="input-2" name="input2" /> <label class="input__label input__label--haruki" for="input-2"> <span class="input__label-content input__label-content--haruki" style="width:50px;line-height:50px;"></span> </label></span>
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="number" step="0.01" id="input-3" name="input3" /> <label class="input__label input__label--haruki" for="input-3"> <span class="input__label-content input__label-content--haruki" style="width:50px;line-height:50px;"></span> </label></span>
                 <span style="width:100%"><input type="submit" value="添加" style="height:50px;width:300px;margin-left:376px;"></span>
+            </form>
+            <br><br><br>
+
+            <form method="post" action="/RecordSystem/Upload" enctype="multipart/form-data">
+                <table style="margin:0 auto;">
+                    <tr>
+                        <td><input type="file" name="uploadfile"></td>
+                        <td><input type="submit" value="上传文件"></td>
+                    </tr>
+                </table>
+
             </form>
         </div>
     </section><!-- End Counts Section -->
