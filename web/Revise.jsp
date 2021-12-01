@@ -38,6 +38,25 @@
   <!-- Template Main CSS File -->
   <link href="static/assets/css/style.css" rel="stylesheet">
 
+  <style type="text/css">
+    .button{
+      padding: 4px 8px 4px 8px;
+      margin: 0 195px;
+      border: 1px solid #fa8717;
+      background: #fff;
+      text-align: center;
+      display: inline;
+      font-size: 14px;
+      color: #464646;
+      border-radius: 4px;
+    }
+
+    .button:hover{
+      background-color:#fa8717;
+    }
+
+  </style>
+
   <script type="text/javascript">
     function getQueryVariable(variable)
     {
@@ -52,6 +71,23 @@
 
     if(getQueryVariable("wrong")=="-1"){
       alert("输入数据类型错误！")
+    }
+
+    var Page = getQueryVariable("page");
+    if(Page===false){Page = 1;}
+    function turnP(obj) {
+      if (obj === 1) {
+        //下一页
+
+        window.location.href = "Revise.jsp?page=" + (Page + 1);
+      } else {
+        //上一页
+        if (Page === 1) {
+          alert("已经是首页了~~");
+        } else {
+          window.location.href = "Revise.jsp?page=" + (Page - 1);
+        }
+      }
     }
 
 
@@ -110,13 +146,15 @@
           </tr>
 
           <%
+            int Page;
+            try {
+              Page = Integer.valueOf(request.getParameter("page"));
+            } catch (Exception e) {
+              Page = 1;
+            }
             SQLtool sqltool = new SQLtool();
             ArrayList<Goods> arrayList = new ArrayList<>();
-            try {
-              arrayList = sqltool.Select();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
+            arrayList = sqltool.PrepareSelect(Page);
 
             for(Goods goods:arrayList){
 
@@ -141,6 +179,7 @@
 
 
         </table>
+        <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>
       </div>
     </section><!-- End Counts Section -->
   </div></section><!-- End Our Team Section -->

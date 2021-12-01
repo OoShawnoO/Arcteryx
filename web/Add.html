@@ -81,6 +81,11 @@ transform: translate3d(0, 0.5em, 0);
 {
     text-align:center;
 }
+
+    .download:hover
+    {
+        background-color:#8fd19e;
+    }
     </style>
     <script type="text/javascript">
         var addname,addprice,addcost;
@@ -182,8 +187,13 @@ transform: translate3d(0, 0.5em, 0);
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="number" step="0.01" id="input-3" name="input3" /> </span>
                 <center><span style="width:100%"><input type="submit" value="添加" style="height:50px;width:300px"></span></center>
             </form>
-            <br><br><br>
+            <br>
 
+            <br>
+            <center><a href="static/添加货物模板.xls" class="download" download="添加货物模板" style="font-family: 'Microsoft JhengHei Light';color:rebeccapurple;font-size:2em;border:solid rebeccapurple 2px">下载添加货物模板</a></center>
+            <br>
+
+            <br>
             <form method="post" action="/RecordSystem/Upload" enctype="multipart/form-data">
                 <table style="margin:0 auto;">
                     <tr>
