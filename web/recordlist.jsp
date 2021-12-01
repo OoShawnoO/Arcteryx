@@ -55,6 +55,23 @@
       background-color:lightseagreen;
     }
 
+    .button{
+      padding: 4px 8px 4px 8px;
+      margin: 0 195px;
+      border: 1px solid #fa8717;
+      background: #fff;
+      text-align: center;
+      display: inline;
+      font-size: 14px;
+      color: #464646;
+      border-radius: 4px;
+    }
+
+    .button:hover{
+      background-color:#fa8717;
+    }
+
+
   </style>
 </head>
 
@@ -187,8 +204,7 @@
 
 
         </table>
-        <center><a class="button" onclick="turnP(2)">上一页</a>
-          <a class="button" onclick="turnP(1)">下一页</a></center>
+        <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>
       </div>
     </section><!-- End Counts Section -->
   </div></section><!-- End Our Team Section -->
