@@ -1,4 +1,4 @@
-<%@ page import="swu.edu.hzd.SQLtool" %>
+        <%@ page import="swu.edu.hzd.SQLtool" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="swu.edu.hzd.Goods" %>
 <%@ page import="java.io.PrintWriter" %>
@@ -110,6 +110,33 @@
         }
       }
 
+      function getQueryVariable(variable)
+      {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+          var pair = vars[i].split("=");
+          if(pair[0] == variable){return parseInt(pair[1]);}
+        }
+        return(false);
+      }
+
+      var Page = getQueryVariable("page");
+      if(Page===false){Page = 1;}
+      function turnP(obj) {
+        if (obj === 1) {
+          //下一页
+
+          window.location.href = "recordlist.jsp?page=" + (Page + 1);
+        } else {
+          //上一页
+          if (Page === 1) {
+            alert("已经是首页了~~");
+          } else {
+            window.location.href = "recordlist.jsp?page=" + (Page - 1);
+          }
+        }
+      }
     </script>
     <!-- ======= Counts Section ======= -->
     <section class="counts section-bg">
@@ -125,15 +152,18 @@
 
           </tr>
           <%
+            int Page;
+            try {
+              Page = Integer.valueOf(request.getParameter("page"));
+            } catch (Exception e) {
+              Page = 1;
+            }
+
             SQLtool sqltool = new SQLtool();
             ArrayList<Goods> arrayList = new ArrayList<>();
-            try {
-              arrayList = sqltool.Select();
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-            int i=0;
-            for(Goods goods:arrayList){
+            arrayList = sqltool.PrepareSelect(Page);
+            int i = 0;
+            for (Goods goods : arrayList) {
               i++;
           %>
           <tr onclick="hid('hid<%out.print(i);%>')">
@@ -148,7 +178,8 @@
               </form>
             </td>
           </tr>
-          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb"><div id="echarts<%out.print(i);%>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
+          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb"><div id="echarts<%out.print(i);
+                    %>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
           <%
             }
           %>
@@ -156,6 +187,8 @@
 
 
         </table>
+        <center><a class="button" onclick="turnP(2)">上一页</a>
+          <a class="button" onclick="turnP(1)">下一页</a></center>
       </div>
     </section><!-- End Counts Section -->
   </div></section><!-- End Our Team Section -->
@@ -163,14 +196,16 @@
     <!--<div id="echarts1" style="width:900px;height:500px;margin:0 auto;"></div>-->
 
         <%
-          int j=0;
+          int j = 0;
           SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-          for(Goods goods:arrayList){
+          for (Goods goods : arrayList) {
             try {
-                  j++;
-                  Goods updategood = sqltool.Select_Update(goods.getName());
+              j++;
+              Goods updategood = sqltool.Select_Update(goods.getName());
 
-                  if(updategood.DateList.isEmpty()||updategood.OldCost.isEmpty()||updategood.OldPrice.isEmpty()){continue;}
+              if (updategood.DateList.isEmpty() || updategood.OldCost.isEmpty() || updategood.OldPrice.isEmpty()) {
+                continue;
+              }
 
         %>
 <script>
@@ -199,14 +234,16 @@
                 type: 'category',
                 boundaryGap: false,
                 data: [<%
-                  int n=0;
-                  for(String date:updategood.DateList){
-                    if(n>0){out.print(",");}
-                    out.print("'"+date+"'");
-                    n++;
-                  }
-                  //out.print(",'"+simpleDateFormat.format(new Date())+"'");
-                %>]
+                        int n = 0;
+                        for (String date : updategood.DateList) {
+                            if (n > 0) {
+                                out.print(",");
+                            }
+                            out.print("'" + date + "'");
+                            n++;
+                        }
+                        //out.print(",'"+simpleDateFormat.format(new Date())+"'");
+                        %>]
             },
             yAxis: {
                 type: 'value',
@@ -219,14 +256,16 @@
                     name: '价格',
                     type: 'line',
                     data: [<%
-                              int x=0;
-                              for(float price:updategood.OldPrice){
-                                if(x>0){out.print(",");}
-                                out.print(price);
-                                x++;
-                              }
-                              //out.print(","+goods.getPrice());
-                            %>],
+                        int x = 0;
+                        for (float price : updategood.OldPrice) {
+                            if (x > 0) {
+                                out.print(",");
+                            }
+                            out.print(price);
+                            x++;
+                        }
+                        //out.print(","+goods.getPrice());
+                        %>],
                     markPoint: {
                         data: [
                             { type: 'max', name: 'Max' },
@@ -241,14 +280,16 @@
                     name: '成本',
                     type: 'line',
                     data: [<%
-                            int m=0;
-                              for(float cost:updategood.OldCost){
-                                if(m>0){out.print(",");}
-                                out.print(cost);
-                                m++;
-                              }
-                              //out.print(","+goods.getCost());
-                            %>],
+                        int m = 0;
+                        for (float cost : updategood.OldCost) {
+                            if (m > 0) {
+                                out.print(",");
+                            }
+                            out.print(cost);
+                            m++;
+                        }
+                        //out.print(","+goods.getCost());
+                        %>],
                     markPoint: {
                         data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }]
                     },
@@ -276,11 +317,11 @@
                 }
             ]
         };
-        myChart<%out.print(j);%>.setOption(option);
+        myChart<%out.print(j);%>.setOption(option,true);
 </script>
         <%
-        } catch (SQLException e) {
-                   e.printStackTrace();
+            } catch (SQLException e) {
+              e.printStackTrace();
             }
 
           }

@@ -31,6 +31,21 @@ public class SQLtool {
         return null;
     }
 
+    public static Connection  Connect_pre(){
+        Connection conn = null;
+        try{
+            Class.forName(JDBC_DRIVER);
+            //System.out.println("链接数据库中...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            //System.out.println("链接数据库成功！");
+            //System.out.println("实例化对象中...");
+            return conn;
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean Select_Users(String username,String password) throws SQLException {
         Statement statement;
 
@@ -74,22 +89,22 @@ public class SQLtool {
         return goods;
     }
 
-
     public ArrayList<Goods> Select() throws SQLException {
         Statement statement;
         ArrayList<Goods> goodsList = new ArrayList<>();
         if((statement=Connect())!=null){
             String sql = "Select id,name,price,cost from record";
-            ResultSet resultSet = statement.executeQuery(sql);
-            while(resultSet.next()) {
+            ResultSet rs = statement.executeQuery(sql);
+            while(rs.next())
+            {
                 Goods goods = new Goods();
-                goods.setCost(resultSet.getFloat("cost"));
-                goods.setPrice(resultSet.getFloat("price"));
-                goods.setName(resultSet.getString("name"));
-                goods.setId(resultSet.getInt("id"));
+                goods.setCost(rs.getFloat("cost"));
+                goods.setPrice(rs.getFloat("price"));
+                goods.setName(rs.getString("name"));
+                goods.setId(rs.getInt("id"));
                 goodsList.add(goods);
             }
-            resultSet.close();
+            rs.close();
             statement.close();
         }
         return goodsList;
@@ -131,6 +146,36 @@ public class SQLtool {
             statement.close();
         }
 
+    }
+
+    public ArrayList<Goods> PrepareSelect(int page){
+        int s = page*7 -7;
+        ArrayList<Goods> goodsList = new ArrayList<>();
+        Connection conn = Connect_pre();
+        if(conn!=null) {
+            try {
+
+                String sql = "select * from record limit ?,7";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setInt(1, s);
+                ResultSet resultSet = ps.executeQuery();
+                while (resultSet.next()) {
+                    Goods goods = new Goods();
+                    goods.setCost(resultSet.getFloat("cost"));
+                    goods.setPrice(resultSet.getFloat("price"));
+                    goods.setName(resultSet.getString("name"));
+                    goods.setId(resultSet.getInt("id"));
+                    goodsList.add(goods);
+                }
+                resultSet.close();
+                ps.close();
+                return goodsList;
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }
