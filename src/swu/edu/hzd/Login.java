@@ -24,9 +24,16 @@ public class Login extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String VerficationCode = request.getParameter("VerficationCode");
 
         HttpSession session = request.getSession();
-
+        if(!VerficationCode.equalsIgnoreCase(String.valueOf(session.getAttribute("verfication")))){
+            if(!response.isCommitted()){
+                //System.out.println(VerficationCode+"       "+ request.getSession().getAttribute("verfication"));
+                response.sendRedirect("login.html?true=-3");
+                return;
+            }
+        }
 
         try {
             if(sqLtool.Select_Users(username,password)){

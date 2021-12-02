@@ -103,5 +103,15 @@
         <servlet-name>Upload</servlet-name>
         <url-pattern>/Upload</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GetVerfication</servlet-name>
+        <servlet-class>swu.edu.hzd.GetVerfication</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>GetVerfication</servlet-name>
+        <url-pattern>/GetVerfication</url-pattern>
+    </servlet-mapping>
 
 </web-app>

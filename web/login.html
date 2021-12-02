@@ -51,7 +51,7 @@
       background-color: #2D2D3F;
     }
     .but{
-      width: 300px;
+      width: 278px;
       min-height: 20px;
       display: block;
       background-color: #4a77d4;
@@ -62,6 +62,19 @@
       line-height: normal;
       border-radius: 5px;
       margin: 0;
+    }
+
+    .VerficationCode
+    {
+      width: 150px;
+      height:40px;
+      display:block;
+      background-color:#efbdc9;
+      font-size:1.5em;
+      color:#B13049;
+      margin-bottom: 0;
+      text-align:center;
+      margin-right: 20px;
     }
 
   </style>
@@ -85,14 +98,22 @@
       alert("请先登录后再访问其他网站！");
     }
 
+    if(getQueryVariable("true")=='-3'){
+      alert("验证码错误！")
+    }
+
   </script>
 </head>
 <body>
 <div id="login">
   <h1>Login client</h1>
   <form name="login" method="POST" action="/RecordSystem/Login">
+
     <input type="text" required="required" placeholder="用户名" name="username" value="">
     <input type="password" required="required" placeholder="密码" name="password" value="">
+    <table>
+      <tr><td><input class="VerficationCode" type="text" required placeholder="验证码" name="VerficationCode" valuee=""></td> <td><img src="./GetVerfication"></td></tr>
+    </table>
     <button class="but" type="submit">登录</button>
   </form>
 </div>
