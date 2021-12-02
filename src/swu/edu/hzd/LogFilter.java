@@ -26,8 +26,9 @@ public class LogFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-        System.out.println(request.getSession().getAttribute("username")+"   "+request.getServletPath());
-
+        if(!request.getServletPath().endsWith(".js")) {
+            System.out.println(request.getSession().getAttribute("username") + "----->" + request.getServletPath());
+        }
         HttpSession session = request.getSession();
         if(Login.sessions.contains(session)||request.getServletPath().equals("/Login") || request.getServletPath().equals("/login.html")||request.getServletPath().equals("/GetVerfication")||request.getServletPath().equals("/RecordSystem/login.html")){
             filterChain.doFilter(request,response);

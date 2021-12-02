@@ -19,10 +19,12 @@ public class UpdateFilter implements Filter {
         if(!(request.getSession().getAttribute("username")).equals(ADMIN_USERNAME)){
             if(!response.isCommitted()){
                 response.sendRedirect("/RecordSystem/team");
+                return;
             }
         }
         else {
             filterChain.doFilter(request, response);
+            return;
         }
 
     }
