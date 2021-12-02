@@ -73,7 +73,7 @@
     <div class="container">
 
         <div class="section-title">
-            <h2>记账系统V1.0</h2>
+            <h2>RecordSystemV1.03</h2>
             <p>应用Tomcat,Java,Servlet,MySQL实现</p>
         </div>
 
