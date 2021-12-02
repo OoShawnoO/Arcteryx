@@ -79,7 +79,7 @@
         </div>
 
         <!-- ======= Counts Section ======= -->
-        <section class="counts section-bg">
+        <section style="box-shadow: 0px 0 16px rgb(0 0 0 / 10%);" class="counts section-bg">
             <div class="container">
 
                 <div class="row">
