@@ -40,12 +40,13 @@ public class AddGoods extends HttpServlet {
             Float price = Float.valueOf(request.getParameter("input2"));
             Float cost = Float.valueOf(request.getParameter("input3"));
             String uploader = String.valueOf(request.getSession().getAttribute("username"));
+            String intro = String.valueOf(request.getParameter("comment"));
             System.out.println(name+"  "+price+"  "+cost+"  "+uploader);
             SQLtool sqLtool = new SQLtool();
             try {
-                sqLtool.Insert("record",name,uploader,price,cost);
+                sqLtool.Insert("record",name,uploader,price,cost,intro);
                 response.sendRedirect("Add.html");
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

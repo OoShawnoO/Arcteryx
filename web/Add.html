@@ -181,11 +181,13 @@ transform: translate3d(0, 0.5em, 0);
 
 
             </table>
-            <form name="inputform" method="post" action="/RecordSystem/AddGoods">
+            <form name="inputform" id="inputform" method="post" action="/RecordSystem/AddGoods">
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="text" id="input-1" name="input1" /></span>
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="number" step="0.01" id="input-2" name="input2" /> </span>
                 <span class="input input--haruki"> <input class="input__field input__field--haruki" type="number" step="0.01" id="input-3" name="input3" /> </span>
-                <center><span style="width:100%"><input type="submit" value="添加" style="height:50px;width:300px"></span></center>
+                <p style="text-align: center;color:#212529;background-color: #e9ecef;padding:12.25px 10px 12.25px 10px">简介</p>
+                <textarea name="comment" id="comment" rows="5" cols="80" style="background-color: transparent;width:100%" form="inputform"></textarea>
+                <center><span style="width:100%"><input type="submit" value="添加" style="height:50px;width:300px;margin-top: 20px;"></span></center>
             </form>
             <br>
 

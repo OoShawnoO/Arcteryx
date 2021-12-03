@@ -31,15 +31,16 @@ public class ReadExcel {
             float price = (float) row.getCell(1).getNumericCellValue();
             float cost = (float) row.getCell(2).getNumericCellValue();
             String uploader = row.getCell(3).getStringCellValue();
-            add(Name,price,cost,uploader);
+            String intro = row.getCell(4).getStringCellValue();
+            add(Name,price,cost,uploader,intro);
         }
 
     }
 
-    public static void add(String name,float price,float cost,String uploader){
+    public static void add(String name,float price,float cost,String uploader,String intro){
         SQLtool sqLtool = new SQLtool();
         try {
-            sqLtool.Insert("record",name,uploader,price,cost);
+            sqLtool.Insert("record",name,uploader,price,cost,intro);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -20,7 +20,7 @@ public class Delete extends HttpServlet {
             int i=0;
             for(i=0;i<arrayList.size();i++){
                 if(arrayList.get(i).getId()==id){
-                    sqLtool.Insert("delete_history",arrayList.get(i).getName(), String.valueOf(request.getSession().getAttribute("username")),arrayList.get(i).getPrice(),arrayList.get(i).getCost());
+                    sqLtool.Insert("delete_history",arrayList.get(i).getName(), String.valueOf(request.getSession().getAttribute("username")),arrayList.get(i).getPrice(),arrayList.get(i).getCost(),"");
                 }
             }
             sqLtool.Delete(id);

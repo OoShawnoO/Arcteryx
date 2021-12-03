@@ -1,11 +1,12 @@
 package swu.edu.hzd;
 
-import com.sun.source.tree.NewArrayTree;
+import org.openxmlformats.schemas.drawingml.x2006.main.STCoordinate32;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 public class SQLtool {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -110,15 +111,15 @@ public class SQLtool {
         return goodsList;
     }
 
-    public void Insert(String tablename,String name,String user,float price,float cost) throws SQLException {
+    public void Insert(String tablename,String name,String user,float price,float cost,String intro) throws SQLException {
         Statement statement;
         if((statement = Connect())!=null){
-            String sql=";";
+            String sql="";
             if(tablename.equals("delete_history")){
                 sql = String.format("INSERT INTO %s(name,deleter,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
             }
             if(tablename.equals("record")){
-                sql = String.format("INSERT INTO %s(name,uploader,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
+                sql = String.format("INSERT INTO %s(name,uploader,price,cost,intro) VALUES('%s','%s',%f,%f,'%s')",tablename,name,user,price,cost,intro.replace("'",""));
             }
 
             System.out.println(sql);
@@ -165,6 +166,7 @@ public class SQLtool {
                     goods.setPrice(resultSet.getFloat("price"));
                     goods.setName(resultSet.getString("name"));
                     goods.setId(resultSet.getInt("id"));
+                    goods.setIntro(resultSet.getString("intro"));
                     goodsList.add(goods);
                 }
                 resultSet.close();
@@ -177,6 +179,7 @@ public class SQLtool {
         }
         return null;
     }
+
 
 }
 

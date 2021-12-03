@@ -195,8 +195,11 @@
               </form>
             </td>
           </tr>
-          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb"><div id="echarts<%out.print(i);
-                    %>" style="width:900px;height:500px;margin:0 auto;"></div></td></tr>
+          <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb">
+            <div><p>简介:<%out.print(goods.getIntro());%></p></div>
+            <div id="echarts<%out.print(i);
+                    %>" style="width:900px;height:500px;margin:0 auto;">
+          </div></td></tr>
           <%
             }
           %>
@@ -258,13 +261,13 @@
                             out.print("'" + date + "'");
                             n++;
                         }
-                        //out.print(",'"+simpleDateFormat.format(new Date())+"'");
+                        out.print(",'"+simpleDateFormat.format(new Date())+"'");
                         %>]
             },
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}元/kg'
+                    formatter: '{value}元'
                 }
             },
             series: [

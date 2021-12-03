@@ -143,12 +143,14 @@
         dataset: {
             source: [
                 ['product', <%
+                if(count>=1){
                     for(int i=0;i<count-1;i++){
                         out.print("'"+arrayList.get(i).getName()+"'"+",");
                     }
                     out.print("'"+arrayList.get(count-1).getName()+"'");
                 %>],
                 ['价格',<%
+
                     for(int i=0;i<count-1;i++){
                         out.print(arrayList.get(i).getPrice()+",");
                     }
@@ -165,6 +167,7 @@
                         out.print(arrayList.get(i).getProfit()+",");
                     }
                     out.print(arrayList.get(count-1).getProfit());
+                    }
                 %>]
             ]
         },
