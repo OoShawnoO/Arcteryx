@@ -53,7 +53,6 @@ public class Upload extends HttpServlet {
                     if(!file.isFormField()){
                         String fileName = new File(file.getName()).getName();
                         request.setAttribute("FileType",fileName.substring(fileName.indexOf(".")));
-
                         String filePath = uploadPath+File.separator+fileName;
                         request.setAttribute("filepath",filePath);
                         File storeFile = new File(filePath);

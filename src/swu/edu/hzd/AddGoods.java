@@ -25,7 +25,11 @@ public class AddGoods extends HttpServlet {
                 if(request.getAttribute("FileType").equals(".xls")){
                     System.out.println("Right!");
                     String path = String.valueOf(request.getAttribute("filepath"));
-                    ReadExcel.Read(path);
+                    try {
+                        ReadExcel.Read(path);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 else{

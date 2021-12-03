@@ -1,6 +1,6 @@
 package swu.edu.hzd;
 
-import org.openxmlformats.schemas.drawingml.x2006.main.STCoordinate32;
+
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -15,17 +15,16 @@ public class SQLtool {
     static final String PASS = "123456";
 
 
-    public static Statement Connect(){
-        Connection conn = null;
-        Statement statement = null;
+    public static Connection Connect() throws SQLException {
+        Connection conn;
         try{
             Class.forName(JDBC_DRIVER);
             //System.out.println("链接数据库中...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             //System.out.println("链接数据库成功！");
             //System.out.println("实例化对象中...");
-            statement = conn.createStatement();
-            return statement;
+
+            return conn;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -33,7 +32,7 @@ public class SQLtool {
     }
 
     public static Connection  Connect_pre(){
-        Connection conn = null;
+        Connection conn;
         try{
             Class.forName(JDBC_DRIVER);
             //System.out.println("链接数据库中...");
@@ -48,9 +47,11 @@ public class SQLtool {
     }
 
     public boolean Select_Users(String username,String password) throws SQLException {
+        Connection conn;
         Statement statement;
 
-        if((statement=Connect())!=null){
+        if((conn=Connect())!=null){
+            statement = conn.createStatement();
             String sql=String.format("Select password from users where username='%s'",username);
             ResultSet resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
@@ -60,19 +61,22 @@ public class SQLtool {
                 }
             }
             statement.close();
+            conn.close();
         }
         return false;
     }
 
     public Goods Select_Update(String goodsname) throws SQLException {
         Statement statement;
+        Connection conn;
         Goods goods = new Goods();
         goods.setName(goodsname);
-        if((statement=Connect())!=null){
+        if((conn=Connect())!=null){
+            statement = conn.createStatement();
             String sql= String.format("select * from update_history");
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()){
-                if(rs.getString("old_name").equals(goodsname)){
+                if(rs.getString("old_name").equals(goodsname)||rs.getString("new_name").equals(goodsname)){
                     goods.OldPrice.add(rs.getFloat("old_price"));
                     goods.OldCost.add(rs.getFloat("old_cost"));
                     goods.DateList.add(rs.getString("datetime"));
@@ -86,14 +90,17 @@ public class SQLtool {
             }
             rs.close();
             statement.close();
+            conn.close();
         }
         return goods;
     }
 
     public ArrayList<Goods> Select(String search) throws SQLException {
         Statement statement;
+        Connection conn;
         ArrayList<Goods> goodsList = new ArrayList<>();
-        if((statement=Connect())!=null){
+        if((conn=Connect())!=null){
+            statement = conn.createStatement();
             String sql = "Select id,name,price,cost from record where name like '%"+search+"%'";
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next())
@@ -108,13 +115,16 @@ public class SQLtool {
             }
             rs.close();
             statement.close();
+            conn.close();
         }
         return goodsList;
     }
 
     public void Insert(String tablename,String name,String user,float price,float cost,String intro,String imgsrc) throws SQLException {
         Statement statement;
-        if((statement = Connect())!=null){
+        Connection conn;
+        if((conn = Connect())!=null){
+            statement = conn.createStatement();
             String sql="";
             if(tablename.equals("delete_history")){
                 sql = String.format("INSERT INTO %s(name,deleter,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
@@ -123,29 +133,40 @@ public class SQLtool {
                 sql = String.format("INSERT INTO %s(name,uploader,price,cost,intro,imgsrc) VALUES('%s','%s',%f,%f,'%s','%s')",tablename,name.replace("'",""),user,price,cost,intro.replace("'",""),imgsrc.replace("'",""));
             }
 
-            System.out.println(sql);
+            //System.out.println(sql);
             statement.execute(sql);
+            statement.close();
+            conn.close();
         }
+
     }
 
     public void Delete(int id) throws SQLException {
         Statement statement;
-        if((statement = Connect())!=null){
+        Connection conn;
+        if((conn = Connect())!=null){
+            statement = conn.createStatement();
             String sql = String.format("delete from record where id=%d;",id);
             statement.execute(sql);
+            statement.close();
         }
     }
 
     public void Update(int id,String new_name,float new_price,float new_cost,String old_name,String updater,float old_price,float old_cost) throws SQLException {
         Statement statement;
-        if((statement = Connect())!=null){
+        Connection conn;
+        if((conn = Connect())!=null){
+            statement = conn.createStatement();
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost,datetime) values('%s','%s','%f','%f','%s','%f','%f','%s')",new_name,updater,new_price,new_cost,old_name,old_price,old_cost,format.format(date));
-            statement.execute(sql1);
+            if(old_cost!=new_cost||old_price!=new_price) {
+                String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost,datetime) values('%s','%s','%f','%f','%s','%f','%f','%s')", new_name, updater, new_price, new_cost, old_name, old_price, old_cost, format.format(date));
+                statement.execute(sql1);
+            }
             String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",new_name,new_price,new_cost,id);
             statement.execute(sql);
             statement.close();
+            conn.close();
         }
 
     }
@@ -175,6 +196,7 @@ public class SQLtool {
                 }
                 resultSet.close();
                 ps.close();
+                conn.close();
                 return goodsList;
 
             } catch (SQLException throwables) {

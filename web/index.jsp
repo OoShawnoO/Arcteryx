@@ -2,7 +2,8 @@
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="javax.xml.transform.Result" %>
-<%@ page import="java.sql.ResultSet" %><%--
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Connection" %><%--
   Created by IntelliJ IDEA.
   User: 小胡
   Date: 2021/11/20
@@ -89,12 +90,17 @@
                                 <i class="icofont-simple-smile" style="color: #20b38e;"></i>
                                 <span data-toggle="counter-up"><%
                                     SQLtool sqLtool = new SQLtool();
-                                    Statement statement = sqLtool.Connect();
+                                    Connection conn;
+                                    conn = SQLtool.Connect();
+                                    Statement statement = conn.createStatement();
                                     try {
                                         ResultSet resultSet = statement.executeQuery("select count(1) AS count from record;");
                                         while(resultSet.next()){
                                         out.print(resultSet.getInt("count"));
                                         }
+                                        resultSet.close();
+                                        statement.close();
+                                        conn.close();
                                     } catch (SQLException e) {
                                         e.printStackTrace();
                                     }
