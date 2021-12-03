@@ -9,6 +9,7 @@ CREATE TABLE `record`(
     `price` FLOAT NOT NULL,
     `cost` FLOAT NOT NULL,
     `intro` VARCHAR(400) NOT NULL,
+    `imgsrc` VARCHAR(100) NOT NULL,
     PRIMARY KEY ( `id` )
     )
 

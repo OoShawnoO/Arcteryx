@@ -90,11 +90,11 @@ public class SQLtool {
         return goods;
     }
 
-    public ArrayList<Goods> Select() throws SQLException {
+    public ArrayList<Goods> Select(String search) throws SQLException {
         Statement statement;
         ArrayList<Goods> goodsList = new ArrayList<>();
         if((statement=Connect())!=null){
-            String sql = "Select id,name,price,cost from record";
+            String sql = "Select id,name,price,cost from record where name like '%"+search+"%'";
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next())
             {
@@ -103,6 +103,7 @@ public class SQLtool {
                 goods.setPrice(rs.getFloat("price"));
                 goods.setName(rs.getString("name"));
                 goods.setId(rs.getInt("id"));
+//                goods.setImgsrc(rs.getString("imgsrc"));
                 goodsList.add(goods);
             }
             rs.close();
@@ -111,7 +112,7 @@ public class SQLtool {
         return goodsList;
     }
 
-    public void Insert(String tablename,String name,String user,float price,float cost,String intro) throws SQLException {
+    public void Insert(String tablename,String name,String user,float price,float cost,String intro,String imgsrc) throws SQLException {
         Statement statement;
         if((statement = Connect())!=null){
             String sql="";
@@ -119,7 +120,7 @@ public class SQLtool {
                 sql = String.format("INSERT INTO %s(name,deleter,price,cost) VALUES('%s','%s',%f,%f)",tablename,name,user,price,cost);
             }
             if(tablename.equals("record")){
-                sql = String.format("INSERT INTO %s(name,uploader,price,cost,intro) VALUES('%s','%s',%f,%f,'%s')",tablename,name,user,price,cost,intro.replace("'",""));
+                sql = String.format("INSERT INTO %s(name,uploader,price,cost,intro,imgsrc) VALUES('%s','%s',%f,%f,'%s','%s')",tablename,name.replace("'",""),user,price,cost,intro.replace("'",""),imgsrc.replace("'",""));
             }
 
             System.out.println(sql);
@@ -149,16 +150,18 @@ public class SQLtool {
 
     }
 
-    public ArrayList<Goods> PrepareSelect(int page){
+    public ArrayList<Goods> PrepareSelect(int page,String search){
         int s = page*7 -7;
         ArrayList<Goods> goodsList = new ArrayList<>();
         Connection conn = Connect_pre();
         if(conn!=null) {
             try {
 
-                String sql = "select * from record limit ?,7";
+                String sql = "select * from record where name like '%"+search+"%' limit ?,7";
                 PreparedStatement ps = conn.prepareStatement(sql);
+//                ps.setString(1,search);
                 ps.setInt(1, s);
+
                 ResultSet resultSet = ps.executeQuery();
                 while (resultSet.next()) {
                     Goods goods = new Goods();
@@ -167,6 +170,7 @@ public class SQLtool {
                     goods.setName(resultSet.getString("name"));
                     goods.setId(resultSet.getInt("id"));
                     goods.setIntro(resultSet.getString("intro"));
+                    goods.setImgsrc(resultSet.getString("imgsrc"));
                     goodsList.add(goods);
                 }
                 resultSet.close();
@@ -179,7 +183,6 @@ public class SQLtool {
         }
         return null;
     }
-
 
 }
 

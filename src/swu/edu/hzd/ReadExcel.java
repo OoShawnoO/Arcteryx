@@ -32,15 +32,16 @@ public class ReadExcel {
             float cost = (float) row.getCell(2).getNumericCellValue();
             String uploader = row.getCell(3).getStringCellValue();
             String intro = row.getCell(4).getStringCellValue();
-            add(Name,price,cost,uploader,intro);
+            String imgsrc = row.getCell(5).getStringCellValue();
+            add(Name,price,cost,uploader,intro,imgsrc);
         }
 
     }
 
-    public static void add(String name,float price,float cost,String uploader,String intro){
+    public static void add(String name,float price,float cost,String uploader,String intro,String imgsrc){
         SQLtool sqLtool = new SQLtool();
         try {
-            sqLtool.Insert("record",name,uploader,price,cost,intro);
+            sqLtool.Insert("record",name,uploader,price,cost,intro,imgsrc);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

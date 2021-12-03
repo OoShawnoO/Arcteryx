@@ -9,14 +9,22 @@ public class Goods {
     private float cost;
     private int id;
     private float profit;
-
-
-
     private String intro;
 
     public ArrayList<Float> OldPrice = new ArrayList<>();
     public ArrayList<Float>  OldCost = new ArrayList<>();
     public ArrayList<String> DateList = new ArrayList<>();
+
+    public String getImgsrc() {
+        return imgsrc;
+    }
+
+    public void setImgsrc(String imgsrc) {
+        this.imgsrc = imgsrc;
+    }
+
+    private String imgsrc;
+
 
     public String getIntro() {
         return intro;

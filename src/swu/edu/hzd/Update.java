@@ -24,7 +24,7 @@ public class Update extends HttpServlet {
         float old_price=0;
         float old_cost=0;
         try {
-            arrayList = sqLtool.Select();
+            arrayList = sqLtool.Select("");
             int i=0;
             for(i=0;i<arrayList.size();i++){
                 if(arrayList.get(i).getId()==id){

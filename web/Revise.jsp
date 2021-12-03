@@ -55,6 +55,28 @@
       background-color:#fa8717;
     }
 
+    .page_list{
+      margin:30px 5px 20px 5px;
+    }
+
+    .page_list_state{
+      padding: 4px 8px 4px 8px;
+      margin: 0 5px;
+      border: 1px solid #fa8717;
+      background: #fff;
+      text-align: center;
+      display: inline;
+      font-size: 14px;
+      color: #464646;
+      border-radius: 4px;
+    }
+
+    .page_list_state:hover{
+      background-color: #fa8717;
+      color:white;
+    }
+
+
   </style>
 
   <script type="text/javascript">
@@ -79,7 +101,7 @@
       if (obj === 1) {
         //下一页
 
-        window.location.href = "Revise.jsp?page=" + (Page + 1);
+        window.location.href = "Revise.jsp?page=" + (parseInt(Page) + 1);
       } else {
         //上一页
         if (Page === 1) {
@@ -146,6 +168,9 @@
           </tr>
 
           <%
+            String search = request.getParameter("search");
+            if(search==null){search="";}
+
             int Page;
             try {
               Page = Integer.valueOf(request.getParameter("page"));
@@ -154,7 +179,14 @@
             }
             SQLtool sqltool = new SQLtool();
             ArrayList<Goods> arrayList = new ArrayList<>();
-            arrayList = sqltool.PrepareSelect(Page);
+            arrayList = sqltool.PrepareSelect(Page,search);
+
+            int count = 0;
+            try {
+              count = sqltool.Select(search).size();
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
 
             for(Goods goods:arrayList){
 
@@ -179,7 +211,24 @@
 
 
         </table>
-        <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>
+        <center><form action="Revise.jsp">
+          <input type="text" name="search" style="border:solid 1px;border-color:#fa8717">
+          <button class="button" style="margin:0;font-family: 'Microsoft JhengHei';font-size: 1em;;" type="submit" value="搜索">搜索</button></form></center>
+        <center>
+<%--        <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>--%>
+        <div class="page_list">
+          <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count%></span>&nbsp;&nbsp;&nbsp;
+          <a class="page_list_state" href="./Revise.jsp">首页</a>&nbsp;
+          <button class="page_list_state" onclick="turnP(2)">上一页</button>&nbsp;
+          <b class="page_list_state"><%=Page%></b>&nbsp;
+          <%for(int number=1;Page+number<(count/7+2)&&number<9;number++)
+          {
+          %>
+          <a class="page_list_state" href="./Revise.jsp?page=<%=(Page+number)%>"><%=(Page+number)%></a>&nbsp;
+          <%}%>
+          <button class="page_list_state" onclick="turnP(1)">下一页</button>&nbsp;
+          <a class="page_list_state" href="./Revise.jsp?page=<%=Integer.valueOf(count/7+1)%>">尾页</a>
+        </div>
       </div>
     </section><!-- End Counts Section -->
   </div></section><!-- End Our Team Section -->

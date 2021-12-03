@@ -44,7 +44,7 @@ public class AddGoods extends HttpServlet {
             System.out.println(name+"  "+price+"  "+cost+"  "+uploader);
             SQLtool sqLtool = new SQLtool();
             try {
-                sqLtool.Insert("record",name,uploader,price,cost,intro);
+                sqLtool.Insert("record",name,uploader,price,cost,intro,"");
                 response.sendRedirect("Add.html");
             } catch (Exception e) {
                 e.printStackTrace();

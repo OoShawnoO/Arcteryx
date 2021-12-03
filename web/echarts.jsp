@@ -38,11 +38,78 @@
 
     <!-- Template Main CSS File -->
     <link href="static/assets/css/style.css" rel="stylesheet">
+    <style type="text/css">
+        .button{
+            padding: 4px 8px 4px 8px;
+            margin: 0 195px;
+            border: 1px solid #fa8717;
+            background: #fff;
+            text-align: center;
+            display: inline;
+            font-size: 14px;
+            color: #464646;
+            border-radius: 4px;
+        }
+
+        .button:hover{
+            background-color:#fa8717;
+        }
+
+        .page_list{
+            margin:30px 5px 20px 5px;
+        }
+
+        .page_list_state{
+            padding: 4px 8px 4px 8px;
+            margin: 0 5px;
+            border: 1px solid #fa8717;
+            background: #fff;
+            text-align: center;
+            display: inline;
+            font-size: 14px;
+            color: #464646;
+            border-radius: 4px;
+        }
+
+        .page_list_state:hover{
+            background-color: #fa8717;
+            color:white;
+        }
+
+    </style>
 
 </head>
 
 <body>
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return parseInt(pair[1]);}
+        }
+        return(false);
+    }
 
+    var Page = getQueryVariable("page");
+    if(Page===false){Page = 1;}
+    function turnP(obj) {
+        if (obj === 1) {
+            //下一页
+
+            window.location.href = "echarts.jsp?page=" + (Page + 1);
+        } else {
+            //上一页
+            if (Page === 1) {
+                alert("已经是首页了~~");
+            } else {
+                window.location.href = "echarts.jsp?page=" + (Page - 1);
+            }
+        }
+    }
+</script>
 
 
 <!-- ======= Header ======= -->
@@ -77,15 +144,57 @@
             <h2>货物图表</h2>
             <p>Echarts框架实现</p>
         </div>
+        <%
+            String search = request.getParameter("search");
+            if(search==null){search="";}
+
+            int Page;
+            try {
+                Page = Integer.valueOf(request.getParameter("page"));
+            } catch (Exception e) {
+                Page = 1;
+            }
+
+            SQLtool sqltool = new SQLtool();
+            ArrayList<Goods> arrayList = new ArrayList<>();
+            arrayList = sqltool.PrepareSelect(Page,search);
+            int count1 = 0;
+            try {
+                count1 = sqltool.Select(search).size();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            int count = arrayList.size();
+        %>
 
         <!-- ======= Counts Section ======= -->
         <section style="box-shadow: 0px 0 16px rgb(0 0 0 / 10%);" class="counts section-bg">
             <div class="container">
 
                 <div class="row">
+
                     <div id="main" style="width: 1000px;height:500px;margin:0 auto;"></div>
                 </div>
 
+            </div>
+            <center><form action="echarts.jsp">
+                <input type="text" name="search" style="border:solid 1px;border-color:#fa8717">
+                <button class="button" style="margin:0;font-family: 'Microsoft JhengHei';font-size: 1em;;" type="submit" value="搜索">搜索</button></form></center>
+            <center>
+<%--            <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>--%>
+            <div class="page_list">
+                <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count1%></span>&nbsp;&nbsp;&nbsp;
+                <a class="page_list_state" href="./echarts.jsp">首页</a>&nbsp;
+                <button class="page_list_state" onclick="turnP(2)">上一页</button>&nbsp;
+                <b class="page_list_state"><%=Page%></b>&nbsp;
+                <%for(int number=1;Page+number<(count1/7+2)&&number<9;number++)
+                {
+                %>
+                <a class="page_list_state" href="./echarts.jsp?page=<%=(Page+number)%>"><%=(Page+number)%></a>&nbsp;
+                <%}%>
+                <button class="page_list_state" onclick="turnP(1)">下一页</button>&nbsp;
+                <a class="page_list_state" href="./echarts.jsp?page=<%=Integer.valueOf(count1/7+1)%>">尾页</a>
             </div>
         </section><!-- End Counts Section -->
     </div></section><!-- End Our Team Section -->
@@ -125,18 +234,6 @@
 <script>
     var myChart = echarts.init(document.getElementById('main'));
 
-    <%
-        SQLtool sqLtool = new SQLtool();
-        ArrayList<Goods> arrayList = new ArrayList<>();
-        try {
-            arrayList = sqLtool.Select();} catch (SQLException e) {
-            e.printStackTrace();
-        }
-        int count = arrayList.size();
-    %>
-
-
-
     var option = {
         legend: {},
         tooltip: {},
@@ -145,9 +242,9 @@
                 ['product', <%
                 if(count>=1){
                     for(int i=0;i<count-1;i++){
-                        out.print("'"+arrayList.get(i).getName()+"'"+",");
+                        out.print("'"+arrayList.get(i).getName().substring(0,8)+"'"+",");
                     }
-                    out.print("'"+arrayList.get(count-1).getName()+"'");
+                    out.print("'"+arrayList.get(count-1).getName().substring(0,8)+"'");
                 %>],
                 ['价格',<%
 
@@ -187,6 +284,7 @@
             { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
             { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
             { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+
             <%
                 for(int i=0;i<(arrayList.size()-3);i++){
                     out.print("{ type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },");
