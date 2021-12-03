@@ -18,7 +18,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>记账系统v1.0</title>
+    <title>RecordSytemV1.0.3</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
 
