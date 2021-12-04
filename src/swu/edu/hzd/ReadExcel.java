@@ -24,11 +24,9 @@ public class ReadExcel {
         fileInputStream = new FileInputStream(path);
         hssfWorkbook =new HSSFWorkbook(fileInputStream);
         HSSFSheet sheet = hssfWorkbook.getSheetAt(0);
-        int i=0;
         SQLtool sqLtool = new SQLtool();
         ArrayList<Goods> arrayList = new ArrayList<>();
         for(Row row:sheet){
-            if(i==0){i++;continue;}
             String Name = row.getCell(0).getStringCellValue();
             float price = (float) row.getCell(1).getNumericCellValue();
             float cost = (float) row.getCell(2).getNumericCellValue();
@@ -55,13 +53,14 @@ public class ReadExcel {
             }
             if(flag == 1){
                 update(arrayList.get(index).getId(),Name,price,cost,arrayList.get(index).getName(),arrayList.get(index).getPrice(),arrayList.get(index).getCost());
-                System.out.println("update------------->"+Name);
+                //System.out.println("update------------->"+Name);
             }
-            else if(flag == -2){
-                continue;
+            else if(flag == -1){
+                add(Name,price,cost,uploader,intro,imgsrc);
             }
-            else{add(Name,price,cost,uploader,intro,imgsrc);}
-            i++;
+            else{
+                System.out.println("跳过！");
+            }
         }
 
     }

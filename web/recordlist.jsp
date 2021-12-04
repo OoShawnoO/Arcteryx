@@ -187,8 +187,8 @@
           <tr>
             <td>序号</td>
             <td>货物名称</td>
-            <td>货物价格（/斤）</td>
-            <td>货物成本（/斤）</td>
+            <td>货物价格（/元）</td>
+            <td>货物成本（/元）</td>
             <td>修改</td>
 
           </tr>
@@ -196,6 +196,7 @@
 
             String search = request.getParameter("search");
             if(search==null){search="";}
+            System.out.println(search);
             //search = "GAMMA MX 连帽衫";
             int Page;
             try {

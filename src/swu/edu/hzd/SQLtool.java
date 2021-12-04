@@ -160,10 +160,10 @@ public class SQLtool {
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             if(old_cost!=new_cost||old_price!=new_price) {
-                String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost,datetime) values('%s','%s','%f','%f','%s','%f','%f','%s')", new_name, updater, new_price, new_cost, old_name, old_price, old_cost, format.format(date));
+                String sql1 = String.format("insert into update_history(new_name,updater,new_price,new_cost,old_name,old_price,old_cost,datetime) values('%s','%s','%f','%f','%s','%f','%f','%s')", new_name.replace("'",""), updater, new_price, new_cost, old_name.replace("'",""), old_price, old_cost, format.format(date));
                 statement.execute(sql1);
             }
-            String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",new_name,new_price,new_cost,id);
+            String sql = String.format("update record set name='%s',price=%f,cost=%f where id=%d",new_name.replace("'",""),new_price,new_cost,id);
             statement.execute(sql);
             statement.close();
             conn.close();
