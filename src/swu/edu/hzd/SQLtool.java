@@ -73,16 +73,12 @@ public class SQLtool {
         goods.setName(goodsname);
         if((conn=Connect())!=null){
             statement = conn.createStatement();
-            String sql= String.format("select * from update_history");
+            String sql= String.format("select * from update_history where new_name='%s'",goods.getName());
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()){
-                if(rs.getString("old_name").equals(goodsname)||rs.getString("new_name").equals(goodsname)){
-                    goods.OldPrice.add(rs.getFloat("old_price"));
-                    goods.OldCost.add(rs.getFloat("old_cost"));
-                    goods.DateList.add(rs.getString("datetime"));
-
-
-                }
+                goods.OldPrice.add(rs.getFloat("old_price"));
+                goods.OldCost.add(rs.getFloat("old_cost"));
+                goods.DateList.add(rs.getString("datetime"));
                 if(rs.isLast()){
                     goods.OldCost.add(rs.getFloat("new_cost"));
                     goods.OldPrice.add(rs.getFloat("new_price"));

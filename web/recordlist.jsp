@@ -340,7 +340,7 @@
                             out.print(price);
                             x++;
                         }
-                        //out.print(","+goods.getPrice());
+                        out.print(","+goods.getPrice());
                         %>],
                     markPoint: {
                         data: [
@@ -364,7 +364,7 @@
                             out.print(cost);
                             m++;
                         }
-                        //out.print(","+goods.getCost());
+                        out.print(","+goods.getCost());
                         %>],
                     markPoint: {
                         data: [{ name: '周最低', value: -2, xAxis: 1, yAxis: -1.5 }]
