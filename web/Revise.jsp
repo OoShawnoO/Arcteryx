@@ -126,7 +126,7 @@
   <div class="container">
 
     <div class="logo float-left">
-      <h1 class="text-light"><a href="index.jsp"><span>Hu</span></a></h1>
+      <h1 class="text-light"><a href="index.jsp"><span>RS</span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="temp.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
     </div>

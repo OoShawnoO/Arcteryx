@@ -3,7 +3,10 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="javax.xml.transform.Result" %>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.Connection" %><%--
+<%@ page import="java.sql.Connection" %>
+<%@ page import="com.mysql.cj.xdevapi.StreamingSqlResultBuilder" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="swu.edu.hzd.Goods" %><%--
   Created by IntelliJ IDEA.
   User: 小胡
   Date: 2021/11/20
@@ -40,6 +43,46 @@
     <!-- Template Main CSS File -->
     <link href="static/assets/css/style.css" rel="stylesheet">
 
+    <style type="text/css">
+        .sellbox
+        {
+            box-shadow: 0 0 16px rgb(0 0 0 / 10%);
+            background: #fff;
+            display:inline;
+        }
+    </style>
+
+    <script>
+        window.onload = function(){
+            var imgs = document.querySelectorAll('img');
+            function getTop(e){
+                return e.offsetTop;
+            }
+            function lazyload(imgs){
+                var h = window.innerHeight;
+                var s = document.documentElement.scrollTop || document.body.scrollTop;
+                for(var i=0;i<imgs.length;i++){
+                    if ((h+s)>getTop(imgs[i])) {
+                        (function(i){
+                            setTimeout(function(){
+                                var temp = new Image();
+                                temp.src = imgs[i].getAttribute('data-src');
+                                temp.onload = function(){
+                                    imgs[i].src = imgs[i].getAttribute('data-src')
+                                }
+                            },2000)
+                        })(i)
+                    }
+                }
+            }
+            lazyload(imgs);
+
+            window.onscroll =function(){
+                lazyload(imgs);
+            }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -51,7 +94,7 @@
     <div class="container">
 
         <div class="logo float-left">
-            <h1 class="text-light"><a href="index.jsp"><span>Hu</span></a></h1>
+            <h1 class="text-light"><a href="index.jsp"><span>RS</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="temp.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
         </div>
@@ -142,9 +185,41 @@
 
                 </div>
 
+
+
             </div>
         </section><!-- End Counts Section -->
-    </div></section><!-- End Our Team Section -->
+
+    </div>
+</section><!-- End Our Team Section -->
+
+<section id="services" class="services">
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Goods</h2>
+        </div>
+
+        <div class="row">
+            <%
+                SQLtool sqLtool1 = new SQLtool();
+                ArrayList<Goods> arrayList = new ArrayList<>();
+                arrayList = sqLtool1.PrepareSelect(1,"");
+                for(Goods goods:arrayList){
+            %>
+            <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">
+                <img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>">
+                <h4 class="title"><a href="">￥<%=goods.getPrice()%></a></h4>
+                <p class="description" style="font-family:'锐字真言体免费商用'"><%=goods.getIntro()%></p>
+            </div>
+
+            <%
+                }
+            %>
+        </div>
+
+    </div>
+</section>
 
 
 <!-- ======= Footer ======= -->

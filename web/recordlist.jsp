@@ -58,7 +58,7 @@
     .button{
       padding: 4px 8px 4px 8px;
       margin: 0 195px;
-      border: 1px solid #fa8717;
+      border: 1px solid #138496;
       background: #fff;
       text-align: center;
       display: inline;
@@ -68,7 +68,7 @@
     }
 
     .button:hover{
-      background-color:#fa8717;
+      background-color:#138496;
     }
 
     tr{
@@ -82,18 +82,24 @@
     .page_list_state{
       padding: 4px 8px 4px 8px;
       margin: 0 5px;
-      border: 1px solid #fa8717;
+      border: 1px solid #138496;
       background: #fff;
       text-align: center;
       display: inline;
       font-size: 14px;
-      color: #464646;
+      color:#138496;
       border-radius: 4px;
     }
 
     .page_list_state:hover{
-      background-color: #fa8717;
+      background-color: #138496;
       color:white;
+    }
+
+    body
+    {
+      font-family:'锐字真言体免费商用';
+      font-size:15px;
     }
 
   </style>
@@ -108,7 +114,7 @@
   <div class="container">
 
     <div class="logo float-left">
-      <h1 class="text-light"><a href=""><span>Hu</span></a></h1>
+      <h1 class="text-light"><a href=""><span>RS</span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="temp.html"><img src="static/assets/img/logo.png" alt="" class="img-fluid"></a>-->
     </div>
@@ -179,10 +185,41 @@
         }
       }
     </script>
+
+    <script>
+      window.onload = function(){
+        var imgs = document.querySelectorAll('img');
+        function getTop(e){
+          return e.offsetTop;
+        }
+        function lazyload(imgs){
+          var h = window.innerHeight;
+          var s = document.documentElement.scrollTop || document.body.scrollTop;
+          for(var i=0;i<imgs.length;i++){
+            if ((h+s)>getTop(imgs[i])) {
+              (function(i){
+                setTimeout(function(){
+                  var temp = new Image();
+                  temp.src = imgs[i].getAttribute('data-src');
+                  temp.onload = function(){
+                    imgs[i].src = imgs[i].getAttribute('data-src')
+                  }
+                },2000)
+              })(i)
+            }
+          }
+        }
+        lazyload(imgs);
+
+        window.onscroll =function(){
+          lazyload(imgs);
+        }
+      }
+    </script>
     <!-- ======= Counts Section ======= -->
     <section style="box-shadow: 0px 0 16px rgb(0 0 0 / 10%);" class="counts section-bg">
       <div class="container">
-        <table class="table table-striped" style="text-align:center;">
+        <table class="table table-striped" style="text-align:center;color:#138496">
 
           <tr>
             <td>序号</td>
@@ -227,13 +264,13 @@
             <td>
               <form name="delete" action="/RecordSystem/Delete">
                 <input type="hidden" value="<%out.print(goods.getId());%>" name="delete" >
-                <button style="border-radius: 10px;border:none;" type="submit">删除</button>
+                <button style="border-radius: 10px;border:none;color:#138496" type="submit">删除</button>
               </form>
             </td>
           </tr>
           <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb">
             <div><p>简介:<%out.print(goods.getIntro());%></p></div>
-            <div><img src="<%=goods.getImgsrc()%>"></div>
+            <div><img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>"></div>
             <div id="echarts<%out.print(i);
                     %>" style="width:900px;height:500px;margin:0 auto;">
           </div></td></tr>
@@ -245,12 +282,12 @@
 
         </table>
         <center><form action="recordlist.jsp">
-          <input type="text" name="search" style="border:solid 1px;border-color:#fa8717">
-          <button class="button" style="margin:0;font-family: 'Microsoft JhengHei';font-size: 1em;;" type="submit" value="搜索">搜索</button></form></center>
+          <input type="text" name="search" style="border:solid 1px;border-color:#138496">
+          <button class="button" style="margin:0;font-size: 1em;color:#138496;" type="submit" value="搜索">搜索</button></form></center>
         <center>
 <%--          <button class="button" onclick="turnP(2)">上一页</button>--%>
 <%--          <button class="button" onclick="turnP(1)">下一页</button>--%>
-          <div class="page_list">
+          <div class="page_list" style="color:#138496">
             <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count%></span>&nbsp;&nbsp;&nbsp;
             <a class="page_list_state" href="./recordlist.jsp">首页</a>&nbsp;
             <button class="page_list_state" onclick="turnP(2)">上一页</button>&nbsp;
