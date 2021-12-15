@@ -99,6 +99,7 @@
     body
     {
       font-family:'锐字真言体免费商用';
+      color:#138496;
       font-size:15px;
     }
 

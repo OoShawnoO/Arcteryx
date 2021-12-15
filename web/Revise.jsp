@@ -42,7 +42,7 @@
     .button{
       padding: 4px 8px 4px 8px;
       margin: 0 195px;
-      border: 1px solid #fa8717;
+      border: 1px solid #138496;
       background: #fff;
       text-align: center;
       display: inline;
@@ -52,7 +52,7 @@
     }
 
     .button:hover{
-      background-color:#fa8717;
+      background-color:#138496;
     }
 
     .page_list{
@@ -62,20 +62,28 @@
     .page_list_state{
       padding: 4px 8px 4px 8px;
       margin: 0 5px;
-      border: 1px solid #fa8717;
+      border: 1px solid #138496;
       background: #fff;
       text-align: center;
       display: inline;
       font-size: 14px;
-      color: #464646;
+      color: #138496;
       border-radius: 4px;
     }
 
     .page_list_state:hover{
-      background-color: #fa8717;
+      background-color: #138496;
       color:white;
     }
 
+    body{
+      font-family: 锐字真言体免费商用;
+      color:#138496;
+    }
+
+    input{
+      color:#138496;
+    }
 
   </style>
 
@@ -157,7 +165,7 @@
     <!-- ======= Counts Section ======= -->
     <section style="box-shadow: 0px 0 16px rgb(0 0 0 / 10%);" class="counts section-bg">
       <div class="container">
-        <table class="table table-striped" style="text-align:center;">
+        <table class="table table-striped" style="text-align:center;color:#138496;">
 
           <tr>
             <td>序号</td>
@@ -192,7 +200,7 @@
 
           %>
           <tr>
-            <form name="revise" action="/RecordSystem/Update">
+            <form name="revise" action="/RecordSystem/Update" style="color:#138496;">
               <td><%out.print(goods.getId());%></td>
               <input type="hidden" name="id" value="<%out.print(goods.getId());%>">
               <td><input type="text" name="name" value="<%out.print(goods.getName());%>" style="text-align: center;border:0;background-color:#d9e8f4"></td>
@@ -212,7 +220,7 @@
 
         </table>
         <center><form action="Revise.jsp">
-          <input type="text" name="search" style="border:solid 1px;border-color:#fa8717">
+          <input type="text" name="search" style="border:solid 1px;border-color:#138496">
           <button class="button" style="margin:0;font-family: 'Microsoft JhengHei';font-size: 1em;;" type="submit" value="搜索">搜索</button></form></center>
         <center>
 <%--        <center><button class="button" onclick="turnP(2)">上一页</button><button class="button" onclick="turnP(1)">下一页</button></center>--%>

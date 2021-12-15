@@ -204,7 +204,7 @@
             <%
                 SQLtool sqLtool1 = new SQLtool();
                 ArrayList<Goods> arrayList = new ArrayList<>();
-                arrayList = sqLtool1.PrepareSelect(1,"");
+                arrayList = sqLtool1.LimitSelect(60);
                 for(Goods goods:arrayList){
             %>
             <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">
@@ -214,6 +214,7 @@
             </div>
 
             <%
+
                 }
             %>
         </div>

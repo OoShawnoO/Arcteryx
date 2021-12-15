@@ -2,6 +2,7 @@ package swu.edu.hzd;
 
 
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +45,23 @@ public class SQLtool {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static ArrayList<Goods> Distribute(ResultSet rs) throws SQLException {
+        ArrayList<Goods> arrayList = new ArrayList<>();
+        while(rs.next())
+        {
+            Goods goods = new Goods();
+            goods.setCost(rs.getFloat("cost"));
+            goods.setPrice(rs.getFloat("price"));
+            goods.setName(rs.getString("name"));
+            goods.setId(rs.getInt("id"));
+            goods.setIntro(rs.getString("intro"));
+            goods.setImgsrc(rs.getString("imgsrc"));
+            arrayList.add(goods);
+        }
+        rs.close();
+        return arrayList;
     }
 
     public boolean Select_Users(String username,String password) throws SQLException {
@@ -99,17 +117,18 @@ public class SQLtool {
             statement = conn.createStatement();
             String sql = "Select id,name,price,cost from record where name like '%"+search+"%'";
             ResultSet rs = statement.executeQuery(sql);
-            while(rs.next())
-            {
-                Goods goods = new Goods();
-                goods.setCost(rs.getFloat("cost"));
-                goods.setPrice(rs.getFloat("price"));
-                goods.setName(rs.getString("name"));
-                goods.setId(rs.getInt("id"));
+//            while(rs.next())
+//            {
+//                Goods goods = new Goods();
+//                goods.setCost(rs.getFloat("cost"));
+//                goods.setPrice(rs.getFloat("price"));
+//                goods.setName(rs.getString("name"));
+//                goods.setId(rs.getInt("id"));
 //                goods.setImgsrc(rs.getString("imgsrc"));
-                goodsList.add(goods);
-            }
-            rs.close();
+//                goodsList.add(goods);
+//            }
+//            rs.close();
+            goodsList = Distribute(rs);
             statement.close();
             conn.close();
         }
@@ -178,19 +197,19 @@ public class SQLtool {
                 PreparedStatement ps = conn.prepareStatement(sql);
 //                ps.setString(1,search);
                 ps.setInt(1, s);
-
                 ResultSet resultSet = ps.executeQuery();
-                while (resultSet.next()) {
-                    Goods goods = new Goods();
-                    goods.setCost(resultSet.getFloat("cost"));
-                    goods.setPrice(resultSet.getFloat("price"));
-                    goods.setName(resultSet.getString("name"));
-                    goods.setId(resultSet.getInt("id"));
-                    goods.setIntro(resultSet.getString("intro"));
-                    goods.setImgsrc(resultSet.getString("imgsrc"));
-                    goodsList.add(goods);
-                }
-                resultSet.close();
+//                while (resultSet.next()) {
+//                    Goods goods = new Goods();
+//                    goods.setCost(resultSet.getFloat("cost"));
+//                    goods.setPrice(resultSet.getFloat("price"));
+//                    goods.setName(resultSet.getString("name"));
+//                    goods.setId(resultSet.getInt("id"));
+//                    goods.setIntro(resultSet.getString("intro"));
+//                    goods.setImgsrc(resultSet.getString("imgsrc"));
+//                    goodsList.add(goods);
+//                }
+//                resultSet.close();
+                goodsList = Distribute(resultSet);
                 ps.close();
                 conn.close();
                 return goodsList;
@@ -200,6 +219,20 @@ public class SQLtool {
             }
         }
         return null;
+    }
+
+    public ArrayList<Goods> LimitSelect(int limit) throws SQLException {
+        ArrayList<Goods> arrayList = new ArrayList<>();
+        Connection conn;
+        if((conn=Connect())!=null){
+            Statement statement = conn.createStatement();
+            String sql = "select * from record limit "+limit;
+            ResultSet rs = statement.executeQuery(sql);
+            arrayList = Distribute(rs);
+            statement.close();
+            conn.close();
+        }
+        return arrayList;
     }
 
 }
