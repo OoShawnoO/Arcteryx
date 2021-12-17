@@ -205,7 +205,7 @@
 
 
     <div class="container">
-        <div class="copyright" style="height:1000px">
+        <div class="copyright" style="height:100px">
             &copy; Copyright <strong><span>Huzhida</span></strong>. All Rights Reserved
         </div>
 

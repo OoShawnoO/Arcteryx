@@ -114,4 +114,14 @@
         <url-pattern>/GetVerfication</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AjaxResponse</servlet-name>
+        <servlet-class>swu.edu.hzd.AjaxResponse</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AjaxResponse</servlet-name>
+        <url-pattern>/AjaxResponse</url-pattern>
+    </servlet-mapping>
+
 </web-app>

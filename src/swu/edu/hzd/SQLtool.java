@@ -235,5 +235,18 @@ public class SQLtool {
         return arrayList;
     }
 
+    public ArrayList<Goods> ExecuteSQL(String sql) throws SQLException {
+        ArrayList<Goods> arrayList = new ArrayList<>();
+        Connection conn;
+        if((conn=Connect())!=null){
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            arrayList = Distribute(rs);
+            statement.close();
+            conn.close();
+        }
+        return arrayList;
+    }
+
 }
 

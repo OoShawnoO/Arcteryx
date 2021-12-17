@@ -52,8 +52,10 @@
         }
     </style>
 
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
     <script>
-        window.onload = function(){
+        function lazy(){
             var imgs = document.querySelectorAll('img');
             function getTop(e){
                 return e.offsetTop;
@@ -81,8 +83,47 @@
                 lazyload(imgs);
             }
         }
-    </script>
+        function doit(){
+            setInterval(lazy,1000)
+        }
+        window.onload = doit;
 
+
+        var page = 1;
+        $(function (){
+            AddRow(page);
+            page = page + 1;
+        });
+
+        $(function (){
+            window.addEventListener('scroll',function(){
+                if(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight){
+                    lazy();
+                    AddRow(page);
+                    page = page+1;
+
+                    $("#services>.container>.row").show();
+                }
+            });
+        });
+
+        function AddRow(page){
+            $.ajax({
+                type:'GET',
+                url:"./AjaxResponse?page="+page,
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                success:function(data){
+                    var Row = $("#services>.container>.row");
+                    var goods = data.goods;
+                    for(var i=0;i<goods.length;i++){
+                        var good = goods[i];
+                        Row.append("<div class=\"col-lg-4 col-md-6 icon-box\" data-aos=\"fade-up\"><img src=\"static/Loading.png\" data-src=\""+good.imgsrc+"\"><h4 class=\"title\"><a href=\"\">￥"+good.price+"</a></h4><p class=\"description\" style=\"font-family:'锐字真言体免费商用'\">"+good.intro+"</p></div>");
+                    }
+                }
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -201,34 +242,36 @@
         </div>
 
         <div class="row">
-            <%
-                SQLtool sqLtool1 = new SQLtool();
-                ArrayList<Goods> arrayList = new ArrayList<>();
-                arrayList = sqLtool1.LimitSelect(60);
-                for(Goods goods:arrayList){
-            %>
-            <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">
-                <img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>">
-                <h4 class="title"><a href="">￥<%=goods.getPrice()%></a></h4>
-                <p class="description" style="font-family:'锐字真言体免费商用'"><%=goods.getIntro()%></p>
-            </div>
+<%--            <%--%>
+<%--                SQLtool sqLtool1 = new SQLtool();--%>
+<%--                ArrayList<Goods> arrayList = new ArrayList<>();--%>
+<%--                arrayList = sqLtool1.LimitSelect(60);--%>
+<%--                for(Goods goods:arrayList){--%>
+<%--                    //实现前后端交互下拉加载的网页：https://www.jb51.net/article/135139.htm--%>
+<%--            %>--%>
+<%--            <div class="col-lg-4 col-md-6 icon-box" data-aos="fade-up">--%>
+<%--                <img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>">--%>
+<%--                <h4 class="title"><a href="">￥<%=goods.getPrice()%></a></h4>--%>
+<%--                <p class="description" style="font-family:'锐字真言体免费商用'"><%=goods.getIntro()%></p>--%>
+<%--            </div>--%>
 
-            <%
+<%--            <%--%>
 
-                }
-            %>
+<%--                }--%>
+<%--            %>--%>
         </div>
-
+        <form>
+            <div id="more"></div>
+        </form>
     </div>
 </section>
-
 
 <!-- ======= Footer ======= -->
 <footer id="footer">
 
 
     <div class="container">
-        <div class="copyright" style="height:1000px">
+        <div class="copyright" style="height:100px">
             &copy; Copyright <strong><span>Huzhida</span></strong>. All Rights Reserved
         </div>
 
