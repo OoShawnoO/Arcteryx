@@ -98,10 +98,10 @@
         $(function (){
             window.addEventListener('scroll',function(){
                 if(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight){
-                    lazy();
-                    AddRow(page);
-                    page = page+1;
-
+                    if(page<50){
+                        AddRow(page);
+                        page = page+1;
+                    }
                     $("#services>.container>.row").show();
                 }
             });
@@ -116,11 +116,15 @@
                 success:function(data){
                     var Row = $("#services>.container>.row");
                     var goods = data.goods;
+                    if(goods.length<6){delete(doit())}
                     for(var i=0;i<goods.length;i++){
                         var good = goods[i];
                         Row.append("<div class=\"col-lg-4 col-md-6 icon-box\" data-aos=\"fade-up\"><img src=\"static/Loading.png\" data-src=\""+good.imgsrc+"\"><h4 class=\"title\"><a href=\"\">￥"+good.price+"</a></h4><p class=\"description\" style=\"font-family:'锐字真言体免费商用'\">"+good.intro+"</p></div>");
                     }
                 }
+                }).fail(function(xhr,status){
+                console.log(status);
+
             })
         }
     </script>
