@@ -115,7 +115,7 @@ public class SQLtool {
         ArrayList<Goods> goodsList = new ArrayList<>();
         if((conn=Connect())!=null){
             statement = conn.createStatement();
-            String sql = "Select id,name,price,cost from record where name like '%"+search+"%'";
+            String sql = "Select * from record where name like '%"+search+"%'";
             ResultSet rs = statement.executeQuery(sql);
 //            while(rs.next())
 //            {
