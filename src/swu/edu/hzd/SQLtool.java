@@ -7,6 +7,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 
 public class SQLtool {
@@ -18,36 +19,35 @@ public class SQLtool {
     static final String MARIA_PASS ="very_strong_password";
     static final String USER = "root";
     static final String PASS = "123456";
+    static String OS = "";
 
-
-    public static Connection Connect() throws SQLException {
-        Connection conn;
-        try{
-            Class.forName(Maria_JDBC_DRIVER);
-            //System.out.println("链接数据库中...");
-            conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
-            //System.out.println("链接数据库成功！");
-            //System.out.println("实例化对象中...");
-
-            return conn;
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static Connection Connect() throws SQLException, ClassNotFoundException {
+        return getProperties();
     }
 
-    public static Connection  Connect_pre(){
+    public static Connection  Connect_pre() throws ClassNotFoundException, SQLException {
+        return getProperties();
+    }
+
+    private static Connection getProperties() throws ClassNotFoundException, SQLException {
+        Properties properties = System.getProperties();
+        OS = properties.getProperty("os.name");
         Connection conn;
-        try{
-            Class.forName(Maria_JDBC_DRIVER);
-            //System.out.println("链接数据库中...");
-            conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
-            //System.out.println("链接数据库成功！");
-            //System.out.println("实例化对象中...");
-            return conn;
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        if(OS.equals("Linux")){
+            try{
+                Class.forName(Maria_JDBC_DRIVER);
+                conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
+                return conn;
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
         }
+        else{
+            Class.forName(JDBC_DRIVER);
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            return conn;
+        }
+
         return null;
     }
 
@@ -68,7 +68,7 @@ public class SQLtool {
         return arrayList;
     }
 
-    public boolean Select_Users(String username,String password) throws SQLException {
+    public boolean Select_Users(String username,String password) throws SQLException, ClassNotFoundException {
         Connection conn;
         Statement statement;
 
@@ -88,7 +88,7 @@ public class SQLtool {
         return false;
     }
 
-    public Goods Select_Update(String goodsname) throws SQLException {
+    public Goods Select_Update(String goodsname) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;
         Goods goods = new Goods();
@@ -113,7 +113,7 @@ public class SQLtool {
         return goods;
     }
 
-    public ArrayList<Goods> Select(String search) throws SQLException {
+    public ArrayList<Goods> Select(String search) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;
         ArrayList<Goods> goodsList = new ArrayList<>();
@@ -139,7 +139,7 @@ public class SQLtool {
         return goodsList;
     }
 
-    public void Insert(String tablename,String name,String user,float price,float cost,String intro,String imgsrc) throws SQLException {
+    public void Insert(String tablename,String name,String user,float price,float cost,String intro,String imgsrc) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;
         if((conn = Connect())!=null){
@@ -160,7 +160,7 @@ public class SQLtool {
 
     }
 
-    public void Delete(int id) throws SQLException {
+    public void Delete(int id) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;
         if((conn = Connect())!=null){
@@ -171,7 +171,7 @@ public class SQLtool {
         }
     }
 
-    public void Update(int id,String new_name,float new_price,float new_cost,String old_name,String updater,float old_price,float old_cost) throws SQLException {
+    public void Update(int id,String new_name,float new_price,float new_cost,String old_name,String updater,float old_price,float old_cost) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;
         if((conn = Connect())!=null){
@@ -190,7 +190,7 @@ public class SQLtool {
 
     }
 
-    public ArrayList<Goods> PrepareSelect(int page,String search){
+    public ArrayList<Goods> PrepareSelect(int page,String search) throws SQLException, ClassNotFoundException {
         int s = page*7 -7;
         ArrayList<Goods> goodsList = new ArrayList<>();
         Connection conn = Connect_pre();
@@ -225,7 +225,7 @@ public class SQLtool {
         return null;
     }
 
-    public ArrayList<Goods> LimitSelect(int limit) throws SQLException {
+    public ArrayList<Goods> LimitSelect(int limit) throws SQLException, ClassNotFoundException {
         ArrayList<Goods> arrayList = new ArrayList<>();
         Connection conn;
         if((conn=Connect())!=null){
@@ -239,7 +239,7 @@ public class SQLtool {
         return arrayList;
     }
 
-    public ArrayList<Goods> ExecuteSQL(String sql) throws SQLException {
+    public ArrayList<Goods> ExecuteSQL(String sql) throws SQLException, ClassNotFoundException {
         ArrayList<Goods> arrayList = new ArrayList<>();
         Connection conn;
         if((conn=Connect())!=null){

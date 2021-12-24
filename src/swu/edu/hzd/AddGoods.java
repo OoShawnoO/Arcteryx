@@ -29,6 +29,8 @@ public class AddGoods extends HttpServlet {
                         ReadExcel.Read(path);
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
                     }
 
                 }

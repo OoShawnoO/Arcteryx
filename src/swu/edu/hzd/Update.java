@@ -38,6 +38,8 @@ public class Update extends HttpServlet {
 
         } catch (SQLException | IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

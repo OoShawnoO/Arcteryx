@@ -27,8 +27,9 @@ public class Delete extends HttpServlet {
             response.sendRedirect("recordlist.jsp");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
 
 
     }

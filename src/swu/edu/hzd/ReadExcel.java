@@ -18,7 +18,7 @@ import java.util.List;
 public class ReadExcel {
 
 
-    public static void Read(String path) throws IOException, SQLException {
+    public static void Read(String path) throws IOException, SQLException, ClassNotFoundException {
         FileInputStream fileInputStream = null;
         HSSFWorkbook hssfWorkbook =null;
         fileInputStream = new FileInputStream(path);
@@ -71,6 +71,8 @@ public class ReadExcel {
             sqLtool.Insert("record",name,uploader,price,cost,intro,imgsrc);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,6 +82,8 @@ public class ReadExcel {
             sqLtool.Update(id,name,price,cost,old_name,"python-spider",old_price,old_cost);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
