@@ -67,10 +67,12 @@
                     if ((h+s)>getTop(imgs[i])) {
                         (function(i){
                             setTimeout(function(){
-                                var temp = new Image();
-                                temp.src = imgs[i].getAttribute('data-src');
-                                temp.onload = function(){
-                                    imgs[i].src = imgs[i].getAttribute('data-src')
+                                if(imgs[i].getAttribute('data-src')!=imgs[i].getAttribute('src')){
+                                    var temp = new Image();
+                                    temp.src = imgs[i].getAttribute('data-src');
+                                    temp.onload = function(){
+                                        imgs[i].src = imgs[i].getAttribute('data-src')
+                                    }
                                 }
                             },2000)
                         })(i)
@@ -90,13 +92,16 @@
 
 
         var page = 1;
+
         $(function (){
+
             AddRow(page);
             page = page + 1;
         });
 
         $(function (){
             window.addEventListener('scroll',function(){
+
                 if(window.pageYOffset + window.innerHeight >= document.documentElement.scrollHeight){
                     if(page<50){
                         AddRow(page);
