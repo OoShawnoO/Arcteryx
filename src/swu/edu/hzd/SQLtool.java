@@ -11,7 +11,11 @@ import java.util.Date;
 
 public class SQLtool {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    static final String Maria_JDBC_DRIVER = "org.mariadb.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/record?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    static final String MariaDB_URL = "jdbc:mariadb://localhost:3306/record";
+    static final String MARIA_USER = "administrator";
+    static final String MARIA_PASS ="very_strong_password";
     static final String USER = "root";
     static final String PASS = "123456";
 
@@ -19,9 +23,9 @@ public class SQLtool {
     public static Connection Connect() throws SQLException {
         Connection conn;
         try{
-            Class.forName(JDBC_DRIVER);
+            Class.forName(Maria_JDBC_DRIVER);
             //System.out.println("链接数据库中...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
             //System.out.println("链接数据库成功！");
             //System.out.println("实例化对象中...");
 
@@ -35,9 +39,9 @@ public class SQLtool {
     public static Connection  Connect_pre(){
         Connection conn;
         try{
-            Class.forName(JDBC_DRIVER);
+            Class.forName(Maria_JDBC_DRIVER);
             //System.out.println("链接数据库中...");
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
             //System.out.println("链接数据库成功！");
             //System.out.println("实例化对象中...");
             return conn;

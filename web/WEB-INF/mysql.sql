@@ -35,6 +35,14 @@ CREATE TABLE `update_history`(
                                  PRIMARY KEY ( `id` )
 )
 
+CREATE TABLE `users`(
+                        `id` INT UNSIGNED AUTO_INCREMENT,
+                        `username` VARCHAR(100) NOT NULL,
+                        `password` VARCHAR(100) NOT NULL,
+                        PRIMARY KEY (`id`)
+)
+
+
 CREATE TABLE `introduce`(
     `id` INT UNSIGNED AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,

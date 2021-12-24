@@ -67,12 +67,10 @@
                     if ((h+s)>getTop(imgs[i])) {
                         (function(i){
                             setTimeout(function(){
-                                    if(imgs[i].getAttribute('data-src')!=imgs[i].getAttribute('src')){
-                                    var temp = new Image();
-                                    temp.src = imgs[i].getAttribute('data-src');
-                                    temp.onload = function(){
-                                        imgs[i].src = imgs[i].getAttribute('data-src')
-                                    }
+                                var temp = new Image();
+                                temp.src = imgs[i].getAttribute('data-src');
+                                temp.onload = function(){
+                                    imgs[i].src = imgs[i].getAttribute('data-src')
                                 }
                             },2000)
                         })(i)
