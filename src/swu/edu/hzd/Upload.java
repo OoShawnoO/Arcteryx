@@ -54,12 +54,19 @@ public class Upload extends HttpServlet {
                     if(!file.isFormField()){
                         String fileName = new File(file.getName()).getName();
                         request.setAttribute("FileType",fileName.substring(fileName.indexOf(".")));
-                        String filePath = uploadPath+File.separator+fileName;
-                        request.setAttribute("filepath",filePath);
-                        File storeFile = new File(filePath);
-                        System.out.println(filePath);
-                        file.write(storeFile);
-                        flag = 1;
+                        if(fileName.substring((fileName.indexOf("."))).equals(".xls")){
+                            String filePath = uploadPath+File.separator+fileName;
+                            request.setAttribute("filepath",filePath);
+                            File storeFile = new File(filePath);
+                            System.out.println(filePath);
+                            file.write(storeFile);
+                            flag = 1;
+                        }
+                        else{
+                            System.out.println("error");
+                            request.setAttribute("warp-url","Add.html?success=-1");
+                        }
+
                     }
                 }
             }

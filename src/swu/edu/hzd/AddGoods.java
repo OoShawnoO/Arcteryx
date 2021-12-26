@@ -34,6 +34,7 @@ public class AddGoods extends HttpServlet {
                 }
                 else{
                     System.out.println("error");
+
                     request.setAttribute("warp-url","Add.html?success=-1");
                 }
             }
