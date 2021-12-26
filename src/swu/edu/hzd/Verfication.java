@@ -8,15 +8,13 @@ import java.io.OutputStream;
 import java.util.Random;
 
 public class Verfication {
-    private int weight = 100;
-    private int height = 40;
+    private final int weight = 100;
+    private final int height = 40;
     private String text;                //用来保存验证码的文本内容
-    private Random r = new Random();    //获取随机数对象
+    private final Random r = new Random();    //获取随机数对象
     //private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};   //字体数组
     //字体数组
-    private String[] fontNames = {"Microsoft JhengHei Light"};
-    //验证码数组
-    private String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
+    private final String[] fontNames = {"Microsoft JhengHei Light"};
 
 
     private Color randomColor(){
@@ -35,6 +33,8 @@ public class Verfication {
     }
 
     private char randomChar() {
+        //验证码数组
+        String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
         int index = r.nextInt(codes.length());
         return codes.charAt(index);
     }

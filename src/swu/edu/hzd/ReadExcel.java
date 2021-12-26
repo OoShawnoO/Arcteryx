@@ -1,31 +1,23 @@
 package swu.edu.hzd;
 
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.ooxml.util.POIXMLUnits;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFRelation;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.commons.io.output.*;
 import java.io.*;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ReadExcel {
 
 
     public static void Read(String path) throws IOException, SQLException, ClassNotFoundException {
-        FileInputStream fileInputStream = null;
-        HSSFWorkbook hssfWorkbook =null;
+        FileInputStream fileInputStream;
+        HSSFWorkbook hssfWorkbook;
         fileInputStream = new FileInputStream(path);
         hssfWorkbook =new HSSFWorkbook(fileInputStream);
         HSSFSheet sheet = hssfWorkbook.getSheetAt(0);
         SQLtool sqLtool = new SQLtool();
-        ArrayList<Goods> arrayList = new ArrayList<>();
+        ArrayList<Goods> arrayList;
         for(Row row:sheet){
             String Name = row.getCell(0).getStringCellValue();
             float price = (float) row.getCell(1).getNumericCellValue();
@@ -36,18 +28,15 @@ public class ReadExcel {
             arrayList = sqLtool.Select(Name.replace("'",""));
             int flag = -1;
             int index = 0;
-            for(int x=0;x<arrayList.size();x++){
+            for (Goods goods : arrayList) {
                 //System.out.println(arrayList.get(x).getName()+"：：：：：："+Name.replace("'",""));
-                if(arrayList.get(x).getName().equals(Name.replace("'","")))
-                {
-                    if(arrayList.get(x).getCost()==cost&&arrayList.get(x).getPrice()==price){
+                if (goods.getName().equals(Name.replace("'", ""))) {
+                    if (goods.getCost() == cost && goods.getPrice() == price) {
                         flag = -2;
-                        break;
+                    } else {
+                        flag = 1;
                     }
-                    else{
-                        flag= 1;
-                        break;
-                    }
+                    break;
 
                 }
             }
@@ -69,10 +58,8 @@ public class ReadExcel {
         SQLtool sqLtool = new SQLtool();
         try {
             sqLtool.Insert("record",name,uploader,price,cost,intro,imgsrc);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -80,10 +67,8 @@ public class ReadExcel {
         SQLtool sqLtool = new SQLtool();
         try{
             sqLtool.Update(id,name,price,cost,old_name,"python-spider",old_price,old_cost);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 

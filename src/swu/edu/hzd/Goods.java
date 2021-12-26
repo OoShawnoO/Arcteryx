@@ -1,14 +1,12 @@
 package swu.edu.hzd;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
 
 public class Goods {
     private String name;
     private float price;
     private float cost;
     private int id;
-    private float profit;
     private String intro;
 
     public ArrayList<Float> OldPrice = new ArrayList<>();
@@ -32,10 +30,6 @@ public class Goods {
 
     public void setIntro(String intro) {
         this.intro = intro;
-    }
-
-    public void setProfit(float profit) {
-        this.profit = profit;
     }
 
     public String getUpdatetime() {

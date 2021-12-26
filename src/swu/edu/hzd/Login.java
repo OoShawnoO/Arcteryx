@@ -49,9 +49,7 @@ public class Login extends HttpServlet {
                 int ok = -1;
                 response.sendRedirect(String.format("login.html?true=%d",ok));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -20,7 +20,7 @@ public class GetVerfication extends HttpServlet {
         BufferedImage image = verfication.getImage();
         request.getSession().setAttribute("verfication",verfication.getText());
         if(!response.isCommitted()) {
-            verfication.output(image, response.getOutputStream());
+            Verfication.output(image, response.getOutputStream());
         }
     }
 }

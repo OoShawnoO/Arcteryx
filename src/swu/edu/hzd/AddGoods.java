@@ -27,9 +27,7 @@ public class AddGoods extends HttpServlet {
                     String path = String.valueOf(request.getAttribute("filepath"));
                     try {
                         ReadExcel.Read(path);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
+                    } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
@@ -43,14 +41,15 @@ public class AddGoods extends HttpServlet {
 
         else{
             String name = request.getParameter("input1");
-            Float price = Float.valueOf(request.getParameter("input2"));
-            Float cost = Float.valueOf(request.getParameter("input3"));
+            float price = Float.parseFloat(request.getParameter("input2"));
+            float cost = Float.parseFloat(request.getParameter("input3"));
+            String imgsrc = request.getParameter("input4");
             String uploader = String.valueOf(request.getSession().getAttribute("username"));
             String intro = String.valueOf(request.getParameter("comment"));
             System.out.println(name+"  "+price+"  "+cost+"  "+uploader);
             SQLtool sqLtool = new SQLtool();
             try {
-                sqLtool.Insert("record",name,uploader,price,cost,intro,"");
+                sqLtool.Insert("record",name,uploader,price,cost,intro,imgsrc);
                 response.sendRedirect("Add.html");
             } catch (Exception e) {
                 e.printStackTrace();

@@ -19,7 +19,7 @@ public class AjaxResponse extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SQLtool sqLtool = new SQLtool();
         String page = request.getParameter("page");
-        int offset = (Integer.valueOf(page) -1)*6;
+        int offset = (Integer.parseInt(page) -1)*6;
         String sql = "SELECT * FROM record ORDER BY id asc LIMIT 6 OFFSET " + offset;
         try {
             ArrayList<Goods> arrayList = sqLtool.ExecuteSQL(sql);
@@ -31,9 +31,7 @@ public class AjaxResponse extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

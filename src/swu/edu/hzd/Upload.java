@@ -4,18 +4,18 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.Servlet;
+//import javax.servlet.RequestDispatcher;
+//import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
+//import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.ref.ReferenceQueue;
+//import java.lang.ref.ReferenceQueue;
 import java.util.List;
 
 @WebServlet(name="Upload")
@@ -23,7 +23,7 @@ public class Upload extends HttpServlet {
     private static final String UPLOADDIRECOTRY = "upload";
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+    //private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if(!ServletFileUpload.isMultipartContent(request)){
@@ -43,7 +43,8 @@ public class Upload extends HttpServlet {
         String uploadPath = request.getServletContext().getRealPath("./")+File.separator + UPLOADDIRECOTRY;
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
-            uploadDir.mkdir();
+            boolean right = uploadDir.mkdir();
+            System.out.println(right);
         }
 
         try{
@@ -63,7 +64,6 @@ public class Upload extends HttpServlet {
                 }
             }
         }catch (Exception ex){
-            System.out.println("123!!!");
             flag = -1;
             ex.printStackTrace();
         }
