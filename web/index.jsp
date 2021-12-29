@@ -119,7 +119,7 @@
                     if(goods.length<6){delete(doit())}
                     for(var i=0;i<goods.length;i++){
                         var good = goods[i];
-                        Row.append("<div class=\"col-lg-4 col-md-6 icon-box\" data-aos=\"fade-up\"><img src=\"static/Loading.png\" data-src=\""+good.imgsrc+"\"><h4 class=\"title\"><a href=\"./More.jsp?id="+good.getid+"\">￥"+good.price+"</a></h4><p class=\"description\" style=\"font-family:'锐字真言体免费商用'\">"+good.intro+"</p></div>");
+                        Row.append("<div class=\"col-lg-4 col-md-6 icon-box\" data-aos=\"fade-up\"><img src=\"static/Loading.png\" data-src=\""+good.imgsrc+"\"><h4 class=\"title\">￥"+good.price+"</h4><p class=\"description\" style=\"font-family:'锐字真言体免费商用'\">"+good.intro+"</p></div>");
                     }
                 }
                 }).fail(function(xhr,status){
