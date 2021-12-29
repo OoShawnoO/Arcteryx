@@ -56,6 +56,17 @@ public class SQLtool {
         return false;
     }
 
+    public boolean AddUsers(String username,String password) throws SQLException, ClassNotFoundException {
+        Connection conn;
+        if((conn=Connect())!=null){
+            Statement statement = conn.createStatement();
+            String sql = String.format("insert into users (username,password) values('%s','%s')",username,password);
+            statement.execute(sql);
+            return true;
+        }
+        return false;
+    }
+
     public Goods Select_Update(String goodsname) throws SQLException, ClassNotFoundException {
         Statement statement;
         Connection conn;

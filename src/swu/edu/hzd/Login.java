@@ -21,7 +21,7 @@ public class Login extends HttpServlet {
 
     protected  void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException {
         SQLtool sqLtool = new SQLtool();
-
+        String register = request.getParameter("register");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String VerficationCode = request.getParameter("VerficationCode");
@@ -34,24 +34,37 @@ public class Login extends HttpServlet {
                 return;
             }
         }
-
-        try {
-            if(sqLtool.Select_Users(username,password)){
-                session.setAttribute("username",username);
-                sessions.add(session);
-                System.out.println("用户："+username+"   Session:"+session.getId()+"正在会话....");
-                if(!response.isCommitted()) {
-                    response.sendRedirect("index.jsp");
+        if(!(register==null)){
+            SQLtool sqLtool1 = new SQLtool();
+            try {
+                sqLtool1.AddUsers(username,password);
+                if(!response.isCommitted()){
+                    response.sendRedirect("login.html?success=true");
                 }
-
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            else{
-                int ok = -1;
-                response.sendRedirect(String.format("login.html?true=%d",ok));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
+        else{
+            try {
+                if(sqLtool.Select_Users(username,password)){
+                    session.setAttribute("username",username);
+                    sessions.add(session);
+                    System.out.println("用户："+username+"   Session:"+session.getId()+"正在会话....");
+                    if(!response.isCommitted()) {
+                        response.sendRedirect("index.jsp");
+                    }
+
+                }
+                else{
+                    int ok = -1;
+                    response.sendRedirect(String.format("login.html?true=%d",ok));
+                }
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 }

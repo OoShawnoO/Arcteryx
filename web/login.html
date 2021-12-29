@@ -30,6 +30,23 @@
       letter-spacing: 1px;
       text-align: center;
     }
+
+    #register{
+      position: absolute;
+      top: 50%;
+      left:50%;
+      margin: -150px 0 0 -150px;
+      width: 300px;
+      height: 300px;
+    }
+
+    #register h1{
+      color: #fff;
+      text-shadow:0 0 10px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
     h1{
       font-size: 2em;
       margin: 0.67em 0;
@@ -78,6 +95,8 @@
     }
 
   </style>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <script type="text/javascript">
     function getQueryVariable(variable)
     {
@@ -102,6 +121,11 @@
       alert("验证码错误！")
     }
 
+    if(getQueryVariable("success")=='true'){
+      alert("注册成功，现在登录吧！")
+    }
+
+
   </script>
 </head>
 <body>
@@ -116,6 +140,20 @@
     </table>
     <button class="but" type="submit">登录</button>
   </form>
+  <button class="but" onclick="javascript:$('#login').hide();$('#register').removeAttr('hidden').show();">注册页面</button>
 </div>
+  <div id="register" hidden>
+    <h1>注册</h1>
+    <form name="register" method="POST" action="/RecordSystem/Login?register=true">
+      <input type="text" required="required" placeholder="用户名" name="username" value="">
+      <input type="password" required="required" placeholder="密码" name="password" value="">
+      <table>
+        <tr><td><input class="VerficationCode" type="text" placeholder="验证码" name="VerficationCode" valuee=""></td> <td><img src="./GetVerfication"></td></tr>
+      </table>
+      <button class="but" type="submit">注册</button>
+    </form>
+  </div>
+
+
 </body>
 </html>
