@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RecordSystem">
+    <output-path>$PROJECT_DIR$/out/artifacts/RecordSystem</output-path>
+    <root id="archive" name="RecordSystem.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="RecordSystem" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/image/mariadb-java-client-3.0.2-rc.jar" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="RecordSystem/web/Web" />
+    </root>
+  </artifact>
+</component>
