@@ -5,48 +5,18 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Properties;
 
+
+import static swu.edu.hzd.ConnectPool.Connect;
 
 public class SQLtool {
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String Maria_JDBC_DRIVER = "org.mariadb.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/record?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-    static final String MariaDB_URL = "jdbc:mariadb://localhost:3306/record";
-    static final String MARIA_USER = "administrator";
-    static final String MARIA_PASS ="very_strong_password";
-    static final String USER = "root";
-    static final String PASS = "123456";
-    static String OS = "";
 
     public static Connection Connect() throws SQLException, ClassNotFoundException {
-        return getProperties();
+        return ConnectPool.Connect();
     }
 
     public static Connection  Connect_pre() throws ClassNotFoundException, SQLException {
-        return getProperties();
-    }
-
-    private static Connection getProperties() throws ClassNotFoundException, SQLException {
-        Properties properties = System.getProperties();
-        OS = properties.getProperty("os.name");
-        Connection conn;
-        if(OS.equals("Linux")){
-            try{
-                Class.forName(Maria_JDBC_DRIVER);
-                conn = DriverManager.getConnection(MariaDB_URL,MARIA_USER,MARIA_PASS);
-                return conn;
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else{
-            Class.forName(JDBC_DRIVER);
-            conn = DriverManager.getConnection(DB_URL,USER,PASS);
-            return conn;
-        }
-
-        return null;
+        return ConnectPool.Connect();
     }
 
     public static ArrayList<Goods> Distribute(ResultSet rs) throws SQLException {
@@ -180,7 +150,7 @@ public class SQLtool {
     public ArrayList<Goods> PrepareSelect(int page,String search) throws SQLException, ClassNotFoundException {
         int s = page*7 -7;
         ArrayList<Goods> goodsList;
-        Connection conn = Connect_pre();
+        Connection conn = Connect();
         if(conn!=null) {
             try {
 
@@ -200,10 +170,10 @@ public class SQLtool {
         return null;
     }
 
-    public ArrayList<Goods> LimitSelect(int limit) throws SQLException, ClassNotFoundException {
+    public ArrayList<Goods> LimitSelect(int limit) throws SQLException {
         ArrayList<Goods> arrayList = new ArrayList<>();
         Connection conn;
-        if((conn=Connect())!=null){
+        if((conn=ConnectPool.Connect())!=null){
             Statement statement = conn.createStatement();
             String sql = "select * from record limit "+limit;
             ResultSet rs = statement.executeQuery(sql);

@@ -43,10 +43,12 @@ CREATE TABLE `users`(
 )
 
 
-CREATE TABLE `introduce`(
+CREATE TABLE `scrapy`(
     `id` INT UNSIGNED AUTO_INCREMENT,
-    `name` VARCHAR(100) NOT NULL,
-    `intro` VARCHAR(400) NOT NULL,
-    `uploader` VARCHAR(100) NOT NULL,
+    `uid` VARCHAR(100) NOT NULL,
+    `userid` VARCHAR(100) NOT NULL,
+    `username` VARCHAR(100) NOT NULL,
+    `price` float not null,
+    `painwear` VARCHAR(100) NOT NULL,
     PRIMARY KEY ( `id` )
 )
