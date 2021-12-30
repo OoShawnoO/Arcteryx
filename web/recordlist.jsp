@@ -235,7 +235,6 @@
             String search = request.getParameter("search");
             if(search==null){search="";}
             System.out.println(search);
-            //search = "GAMMA MX 连帽衫";
             int Page;
             try {
               Page = Integer.valueOf(request.getParameter("page"));
@@ -286,8 +285,6 @@
           <input type="text" name="search" style="border:solid 1px;border-color:#138496">
           <button class="button" style="margin:0;font-size: 1em;color:#138496;" type="submit" value="搜索">搜索</button></form></center>
         <center>
-<%--          <button class="button" onclick="turnP(2)">上一页</button>--%>
-<%--          <button class="button" onclick="turnP(1)">下一页</button>--%>
           <div class="page_list" style="color:#138496">
             <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count%></span>&nbsp;&nbsp;&nbsp;
             <a class="page_list_state" href="./recordlist.jsp">首页</a>&nbsp;

@@ -44,11 +44,14 @@ CREATE TABLE `users`(
 
 #爬虫数据表
 CREATE TABLE `scrapy`(
-    `id` INT UNSIGNED AUTO_INCREMENT,
-    `uid` VARCHAR(100) NOT NULL,
-    `userid` VARCHAR(100) NOT NULL,
-    `username` VARCHAR(100) NOT NULL,
+    `uid` VARCHAR(30) NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `allow_bargain` VARCHAR(10) NOT NULL,
+    `userid` VARCHAR(30) NOT NULL,
+    `username` VARCHAR(20) NOT NULL,
     `price` float not null,
-    `painwear` VARCHAR(100) NOT NULL,
-    PRIMARY KEY ( `id` )
+    `painwear` VARCHAR(50) NOT NULL,
+    `img_src` VARCHAR(100) NOT NULL,
+    `description` VARCHAR(50) NOT NULL,
+    PRIMARY KEY ( `uid` )
 )
