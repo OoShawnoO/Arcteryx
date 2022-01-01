@@ -174,14 +174,13 @@
       function turnP(obj) {
         if (obj === 1) {
           //下一页
-
-          window.location.href = "recordlist.jsp?page=" + (Page + 1);
+          window.location.href = "recordlist.jsp?page=" + (Page + 1)+"&search=<%=request.getParameter("search")%>";
         } else {
           //上一页
           if (Page === 1) {
             alert("已经是首页了~~");
           } else {
-            window.location.href = "recordlist.jsp?page=" + (Page - 1);
+            window.location.href = "recordlist.jsp?page=" + (Page - 1)+"&search=<%=request.getParameter("search")%>";
           }
         }
       }
@@ -270,7 +269,7 @@
           </tr>
           <tr><td id="hid<%out.print(i);%>"  hidden colspan="5" style="height:500px;background-color:#f1f7fb">
             <div><p>简介:<%out.print(goods.getIntro());%></p></div>
-            <div><img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>"></div>
+            <div><img src="static/Loading.png" data-src="<%=goods.getImgsrc()%>" style="width:240px;height:240px;"></div>
             <div id="echarts<%out.print(i);
                     %>" style="width:900px;height:500px;margin:0 auto;">
           </div></td></tr>
@@ -287,13 +286,13 @@
         <center>
           <div class="page_list" style="color:#138496">
             <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count%></span>&nbsp;&nbsp;&nbsp;
-            <a class="page_list_state" href="./recordlist.jsp">首页</a>&nbsp;
+            <a class="page_list_state" href="./recordlist.jsp&search=<%=search%>">首页</a>&nbsp;
             <button class="page_list_state" onclick="turnP(2)">上一页</button>&nbsp;
             <b class="page_list_state"><%=Page%></b>&nbsp;
             <%for(int number=1;Page+number<(count/7+2)&&number<9;number++)
               {
             %>
-            <a class="page_list_state" href="./recordlist.jsp?page=<%=(Page+number)%>"><%=(Page+number)%></a>&nbsp;
+            <a class="page_list_state" href="./recordlist.jsp?page=<%=(Page+number)%>&search=<%=search%>"><%=(Page+number)%></a>&nbsp;
             <%}%>
             <button class="page_list_state" onclick="turnP(1)">下一页</button>&nbsp;
             <a class="page_list_state" href="./recordlist.jsp?page=<%=Integer.valueOf(count/7+1)%>">尾页</a>
