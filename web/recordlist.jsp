@@ -170,17 +170,22 @@
       }
 
       var Page = getQueryVariable("page");
+      <%
+        String search = request.getParameter("search");
+        if(search==null){search="";}
+      %>
+
       if(Page===false){Page = 1;}
       function turnP(obj) {
         if (obj === 1) {
           //下一页
-          window.location.href = "recordlist.jsp?page=" + (Page + 1)+"&search=<%=request.getParameter("search")%>";
+          window.location.href = "recordlist.jsp?page=" + (Page + 1)+"&search=<%=search%>";
         } else {
           //上一页
           if (Page === 1) {
             alert("已经是首页了~~");
           } else {
-            window.location.href = "recordlist.jsp?page=" + (Page - 1)+"&search=<%=request.getParameter("search")%>";
+            window.location.href = "recordlist.jsp?page=" + (Page - 1)+"&search=<%=search%>";
           }
         }
       }
@@ -231,8 +236,7 @@
           </tr>
           <%
 
-            String search = request.getParameter("search");
-            if(search==null){search="";}
+
             System.out.println(search);
             int Page;
             try {
@@ -286,7 +290,7 @@
         <center>
           <div class="page_list" style="color:#138496">
             <span class="page_list_state" title="Total record">总数&nbsp;&nbsp;<%=count%></span>&nbsp;&nbsp;&nbsp;
-            <a class="page_list_state" href="./recordlist.jsp&search=<%=search%>">首页</a>&nbsp;
+            <a class="page_list_state" href="./recordlist.jsp?search=<%=search%>">首页</a>&nbsp;
             <button class="page_list_state" onclick="turnP(2)">上一页</button>&nbsp;
             <b class="page_list_state"><%=Page%></b>&nbsp;
             <%for(int number=1;Page+number<(count/7+2)&&number<9;number++)

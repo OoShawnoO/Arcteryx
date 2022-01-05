@@ -30,6 +30,9 @@ public class ConnectPool{
                     dataSource1.setMaxActive(10);
                     dataSource1.setMaxWait(3000);
                     dataSource1.setMinIdle(3);
+                    dataSource1.setTestWhileIdle(true);
+                    dataSource1.setTestOnBorrow(true);
+                    dataSource1.setTestOnReturn(true);
                 }
                 else{
                     dataSource1 = new DruidDataSource();
@@ -41,6 +44,9 @@ public class ConnectPool{
                     dataSource1.setMaxActive(10);
                     dataSource1.setMaxWait(3000);
                     dataSource1.setMinIdle(3);
+                    dataSource1.setTestWhileIdle(true);
+                    dataSource1.setTestOnBorrow(true);
+                    dataSource1.setTestOnReturn(true);
                 }
 
 
