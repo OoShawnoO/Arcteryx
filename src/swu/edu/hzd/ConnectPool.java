@@ -33,6 +33,9 @@ public class ConnectPool{
                     dataSource1.setTestWhileIdle(true);
                     dataSource1.setTestOnBorrow(true);
                     dataSource1.setTestOnReturn(true);
+                    dataSource1.setRemoveAbandoned(true);
+                    dataSource1.setRemoveAbandonedTimeout(300);
+                    dataSource1.setLogAbandoned(true);
                 }
                 else{
                     dataSource1 = new DruidDataSource();
@@ -47,6 +50,9 @@ public class ConnectPool{
                     dataSource1.setTestWhileIdle(true);
                     dataSource1.setTestOnBorrow(true);
                     dataSource1.setTestOnReturn(true);
+                    dataSource1.setRemoveAbandoned(true);
+                    dataSource1.setRemoveAbandonedTimeout(300);
+                    dataSource1.setLogAbandoned(true);
                 }
 
 
